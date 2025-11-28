@@ -275,11 +275,16 @@ function renderTechStack() {
             `;
 
             cat.skills.forEach(skill => {
-                const isExpanded = expandedId === skill.name;
+                const safeId = skill.name.replace(/\s+/g, '-').replace(/[()]/g, '').toLowerCase();
+                const isExpanded = expandedId === safeId; // Use safeId for comparison if expandedId stores safeId, or store name and compare. 
+                // Let's store safeId in expandedId for consistency.
+                // Note: Initial expandedId is 'Spring Boot', so we need to match that or change initial state.
+                // Let's just use the name for expandedId state but safeId for DOM IDs.
+                const isExpandedState = expandedId === skill.name;
                 const isMaster = skill.level.includes('장인');
 
                 html += `
-                    <div onclick="toggleAccordion('${skill.name}')" class="relative border-2 border-ink-black rounded-lg transition-all duration-300 cursor-pointer overflow-hidden bg-white ${isExpanded ? 'shadow-[6px_6px_0px_0px_rgba(204,51,51,1)] translate-x-0 translate-y-0' : 'hover:shadow-[4px_4px_0px_0px_rgba(51,51,51,0.2)] hover:-translate-y-0.5'}">
+                    <div id="card-${safeId}" onclick="toggleAccordion('${skill.name}')" class="relative border-2 border-ink-black rounded-lg transition-all duration-300 cursor-pointer overflow-hidden bg-white ${isExpandedState ? 'shadow-[6px_6px_0px_0px_rgba(204,51,51,1)] translate-x-0 translate-y-0' : 'hover:shadow-[4px_4px_0px_0px_rgba(51,51,51,0.2)] hover:-translate-y-0.5'}">
                         <div class="p-5 flex items-center justify-between gap-4">
                             <div class="flex items-center gap-4">
                                 <div class="w-12 h-12 p-2 border border-ink-black/20 rounded-lg bg-paper-bg flex items-center justify-center">
@@ -300,11 +305,13 @@ function renderTechStack() {
                                 <div class="hidden md:flex items-center justify-center w-16 h-16 border-4 rounded-full opacity-80 transform rotate-12 mask-image-grunge ${isMaster ? 'border-stamp-red text-stamp-red' : 'border-ink-black/40 text-ink-black/40'}">
                                     <span class="text-sm font-dohyeon text-center leading-tight">${isMaster ? '참잘함' : '이수'}</span>
                                 </div>
-                                <i data-lucide="${isExpanded ? 'chevron-up' : 'chevron-down'}" class="w-6 h-6 ${isExpanded ? 'text-stamp-red' : 'text-ink-black/40'}"></i>
+                                <div id="icon-${safeId}" class="transition-transform duration-300 ${isExpandedState ? 'rotate-180' : ''}">
+                                    <i data-lucide="chevron-down" class="w-6 h-6 ${isExpandedState ? 'text-stamp-red' : 'text-ink-black/40'}"></i>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="border-t-2 border-dashed border-ink-black/20 bg-paper-bg/50 grid transition-all duration-300 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 p-5' : 'grid-rows-[0fr] opacity-0 p-0'}">
+                        <div id="content-${safeId}" class="border-t-2 border-dashed border-ink-black/20 bg-paper-bg/50 grid transition-all duration-300 ease-in-out ${isExpandedState ? 'grid-rows-[1fr] opacity-100 p-5' : 'grid-rows-[0fr] opacity-0 p-0'}">
                             <div class="overflow-hidden">
                                 <div class="grid md:grid-cols-2 gap-6">
                                     <div>
@@ -397,8 +404,62 @@ function switchTab(tab) {
 }
 
 function toggleAccordion(name) {
-    expandedId = expandedId === name ? null : name;
-    renderTechStack();
+    const safeName = name.replace(/\s+/g, '-').replace(/[()]/g, '').toLowerCase();
+    const currentExpandedSafeName = expandedId ? expandedId.replace(/\s+/g, '-').replace(/[()]/g, '').toLowerCase() : null;
+
+    // Helper to toggle classes
+    const toggleClasses = (id, isOpening) => {
+        const card = document.getElementById(`card-${id}`);
+        const content = document.getElementById(`content-${id}`);
+        const iconContainer = document.getElementById(`icon-${id}`);
+        const icon = iconContainer ? iconContainer.querySelector('svg') : null;
+
+        if (card && content) {
+            if (isOpening) {
+                // Open
+                card.classList.remove('hover:shadow-[4px_4px_0px_0px_rgba(51,51,51,0.2)]', 'hover:-translate-y-0.5');
+                card.classList.add('shadow-[6px_6px_0px_0px_rgba(204,51,51,1)]', 'translate-x-0', 'translate-y-0');
+
+                content.classList.remove('grid-rows-[0fr]', 'opacity-0', 'p-0');
+                content.classList.add('grid-rows-[1fr]', 'opacity-100', 'p-5');
+
+                if (iconContainer) iconContainer.classList.add('rotate-180');
+                if (icon) {
+                    icon.classList.remove('text-ink-black/40');
+                    icon.classList.add('text-stamp-red');
+                }
+            } else {
+                // Close
+                card.classList.add('hover:shadow-[4px_4px_0px_0px_rgba(51,51,51,0.2)]', 'hover:-translate-y-0.5');
+                card.classList.remove('shadow-[6px_6px_0px_0px_rgba(204,51,51,1)]', 'translate-x-0', 'translate-y-0');
+
+                content.classList.add('grid-rows-[0fr]', 'opacity-0', 'p-0');
+                content.classList.remove('grid-rows-[1fr]', 'opacity-100', 'p-5');
+
+                if (iconContainer) iconContainer.classList.remove('rotate-180');
+                if (icon) {
+                    icon.classList.add('text-ink-black/40');
+                    icon.classList.remove('text-stamp-red');
+                }
+            }
+        }
+    };
+
+    // Close currently expanded if it exists and is different from clicked
+    if (expandedId && expandedId !== name) {
+        toggleClasses(currentExpandedSafeName, false);
+    }
+
+    // Toggle clicked item
+    if (expandedId === name) {
+        // Closing the same item
+        toggleClasses(safeName, false);
+        expandedId = null;
+    } else {
+        // Opening new item
+        toggleClasses(safeName, true);
+        expandedId = name;
+    }
 }
 
 function copyEmail() {
