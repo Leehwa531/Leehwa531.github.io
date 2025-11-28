@@ -1,26 +1,44 @@
 /* Custom Styles */
 /* Tailwind handles most styles, but we can add custom animations or overrides here */
 
-/* Example: Smooth scrolling for anchor links */
+/* Smooth scrolling */
 html {
     scroll-behavior: smooth;
 }
 
-/* Custom Animation Utility Classes */
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #fdfbf7;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #cc3333;
+}
+
+/* Animations */
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translate3d(0, 20px, 0);
     }
+
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
 .animate-fade-in-up {
     animation: fadeInUp 0.8s ease-out forwards;
-    opacity: 0; /* Start hidden */
 }
 
 .delay-100 {
@@ -33,4 +51,40 @@ html {
 
 .delay-300 {
     animation-delay: 0.3s;
+}
+
+/* Grunge Mask for Stamp Effect */
+.mask-image-grunge {
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.5"/></svg>');
+    mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.5"/></svg>');
+}
+
+/* Pattern Background */
+.bg-pattern-dots {
+    background-image: radial-gradient(#333 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.05;
+}
+
+/* Stamp Bounce Animation */
+@keyframes stampBounce {
+    0% {
+        transform: scale(1.5) rotate(15deg);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(0.9) rotate(15deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1) rotate(15deg);
+        opacity: 1;
+    }
+}
+
+.animate-stamp-bounce {
+    animation: stampBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation-delay: 0.2s;
 }
