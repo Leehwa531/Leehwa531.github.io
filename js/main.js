@@ -663,14 +663,13 @@ function renderAwards() {
             html += `
                 <div class="relative mb-12 flex flex-col md:flex-row items-start w-full animate-fade-in-up ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}" style="animation-delay: ${index * 0.15}s">
                     <div class="flex-1 hidden md:block"></div>
-                    
-                    <div class="absolute left-[-7px] md:left-1/2 top-6 w-4 h-4 bg-stamp-red border-2 border-paper-bg rounded-full md:-translate-x-1/2 z-10 shadow-md transform transition-transform hover:scale-150"></div>
-                    ${item.highlight ? `<div class="absolute left-[-15px] md:left-1/2 top-4 w-8 h-8 bg-stamp-red/20 rounded-full md:-translate-x-1/2 animate-ping"></div>` : ''}
+                    <div class="absolute left-[-7px] md:left-1/2 top-[24px] w-4 h-4 bg-stamp-red border-2 border-paper-bg rounded-full md:-translate-x-1/2 z-10 shadow-md transform transition-transform hover:scale-150"></div>
+                    ${item.highlight ? `<div class="absolute left-[-15px] md:left-1/2 top-[16px] w-8 h-8 bg-stamp-red/20 rounded-full md:-translate-x-1/2 animate-ping"></div>` : ''}
 
-                    <div class="flex-1 w-full pl-4 md:pl-0 md:px-4">
+                    <div class="flex-1 w-full pl-4 md:pl-0 ${index % 2 === 0 ? 'md:pr-12 md:pl-0' : 'md:pl-12 md:pr-0'}">
                         <div class="bg-white border-2 border-ink-black p-5 rounded-lg shadow-[4px_4px_0px_0px_rgba(51,51,51,0.1)] hover:shadow-[6px_6px_0px_0px_rgba(204,51,51,0.5)] transition-all relative group transform hover:-translate-y-1">
-                            <div class="absolute top-6 w-4 h-4 bg-white border-b-2 border-l-2 border-ink-black transform rotate-45 
-                                ${index % 2 === 0 ? 'left-[-12px] md:right-[-12px] md:left-auto md:border-t-2 md:border-r-2 md:border-b-0 md:border-l-0' : 'left-[-12px]'}">
+                            <div class="absolute top-[22px] w-4 h-4 bg-white border-b-2 border-l-2 border-ink-black transform rotate-45 
+                                ${index % 2 === 0 ? 'left-[-14px] md:right-[-10px] md:left-auto md:border-t-2 md:border-r-2 md:border-b-0 md:border-l-0' : 'left-[-14px] md:left-[-10px]'}">
                             </div>
 
                             ${item.highlight ? `<span class="absolute -top-3 right-4 bg-stamp-red text-white text-xs px-2 py-1 rounded font-dohyeon shadow-sm animate-pulse">${item.highlight}</span>` : ''}
