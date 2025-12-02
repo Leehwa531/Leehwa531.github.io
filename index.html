@@ -71,51 +71,78 @@
             before:content-[''] before:absolute before:inset-0 before:rounded-full 
             before:bg-paper-bg/80 before:backdrop-blur-md before:shadow-2xl before:border before:border-ink-black/10">
 
-            <!-- Theme Icon (Static for now) -->
-            <div
-                class="relative z-10 w-9 h-9 flex items-center justify-center rounded-full border border-ink-black/20 text-ink-black group cursor-default">
+            <!-- Theme Icon (Scroll to Top) -->
+            <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+                class="relative z-10 w-9 h-9 flex items-center justify-center rounded-full border border-ink-black/20 text-ink-black group cursor-pointer hover:border-stamp-red hover:bg-white transition-all duration-300"
+                aria-label="맨 위로 가기">
                 <span class="text-sm font-bold group-hover:text-stamp-red transition-colors">朴</span>
-            </div>
+            </a>
 
-            <!-- Nav Item: About -->
-            <button onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})"
-                class="group relative z-10 p-2 cursor-pointer outline-none">
+            <!-- Nav Item: About (Chef) -->
+            <a href="#about" class="nav-link group relative z-10 p-2 outline-none" aria-label="소개 (About)">
                 <!-- Icon -->
                 <div
-                    class="w-4 h-4 bg-ink-black/30 rounded-xl transition-all duration-500 ease-in-out
+                    class="nav-icon w-4 h-4 bg-ink-black/30 rounded-xl transition-all duration-500 ease-in-out
                             group-hover:bg-stamp-red group-hover:rounded-sm group-hover:rotate-[135deg] group-focus:bg-stamp-red">
                 </div>
-                <div class="absolute top-1/2 right-full mr-4 -translate-y-1/2 px-3 py-1 bg-ink-black text-paper-bg text-xs font-dohyeon rounded opacity-0 -translate-x-2 pointer-events-none transition-all duration-300
-                            group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">
-                    메뉴 (Projects)
-                </div>
-            </button>
-
-            <!-- Nav Item: Awards -->
-            <button onclick="document.getElementById('awards').scrollIntoView({behavior: 'smooth'})"
-                class="group relative z-10 p-2 cursor-pointer outline-none">
                 <div
-                    class="w-4 h-4 bg-ink-black/30 rounded-xl transition-all duration-500 ease-in-out
+                    class="absolute top-1/2 right-full mr-4 -translate-y-1/2 px-3 py-1 bg-ink-black text-paper-bg text-xs font-dohyeon rounded opacity-0 -translate-x-2 pointer-events-none transition-all duration-300
+                            group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 whitespace-nowrap">
+                    주방장 (About)
+                </div>
+            </a>
+
+            <!-- Nav Item: Tech Stack (Ingredients) -->
+            <a href="#tech-stack" class="nav-link group relative z-10 p-2 outline-none" aria-label="재료 (Tech Stack)">
+                <div
+                    class="nav-icon w-4 h-4 bg-ink-black/30 rounded-xl transition-all duration-500 ease-in-out
                             group-hover:bg-stamp-red group-hover:rounded-sm group-hover:rotate-[135deg] group-focus:bg-stamp-red">
                 </div>
-                <div class="absolute top-1/2 right-full mr-4 -translate-y-1/2 px-3 py-1 bg-ink-black text-paper-bg text-xs font-dohyeon rounded opacity-0 -translate-x-2 pointer-events-none transition-all duration-300
-                            group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">
+                <div
+                    class="absolute top-1/2 right-full mr-4 -translate-y-1/2 px-3 py-1 bg-ink-black text-paper-bg text-xs font-dohyeon rounded opacity-0 -translate-x-2 pointer-events-none transition-all duration-300
+                            group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 whitespace-nowrap">
+                    재료 (Tech Stack)
+                </div>
+            </a>
+
+            <!-- Nav Item: Awards (Certification) -->
+            <a href="#awards" class="nav-link group relative z-10 p-2 outline-none" aria-label="인증 (Awards)">
+                <div
+                    class="nav-icon w-4 h-4 bg-ink-black/30 rounded-xl transition-all duration-500 ease-in-out
+                            group-hover:bg-stamp-red group-hover:rounded-sm group-hover:rotate-[135deg] group-focus:bg-stamp-red">
+                </div>
+                <div
+                    class="absolute top-1/2 right-full mr-4 -translate-y-1/2 px-3 py-1 bg-ink-black text-paper-bg text-xs font-dohyeon rounded opacity-0 -translate-x-2 pointer-events-none transition-all duration-300
+                            group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 whitespace-nowrap">
                     인증 (Awards)
                 </div>
-            </button>
+            </a>
 
-            <!-- Nav Item: Contact -->
-            <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
-                class="group relative z-10 p-2 cursor-pointer outline-none">
+            <!-- Nav Item: Projects (Menu) -->
+            <a href="#projects" class="nav-link group relative z-10 p-2 outline-none" aria-label="메뉴 (Projects)">
                 <div
-                    class="w-4 h-4 bg-ink-black/30 rounded-xl transition-all duration-500 ease-in-out
+                    class="nav-icon w-4 h-4 bg-ink-black/30 rounded-xl transition-all duration-500 ease-in-out
                             group-hover:bg-stamp-red group-hover:rounded-sm group-hover:rotate-[135deg] group-focus:bg-stamp-red">
                 </div>
-                <div class="absolute top-1/2 right-full mr-4 -translate-y-1/2 px-3 py-1 bg-ink-black text-paper-bg text-xs font-dohyeon rounded opacity-0 -translate-x-2 pointer-events-none transition-all duration-300
-                            group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">
+                <div
+                    class="absolute top-1/2 right-full mr-4 -translate-y-1/2 px-3 py-1 bg-ink-black text-paper-bg text-xs font-dohyeon rounded opacity-0 -translate-x-2 pointer-events-none transition-all duration-300
+                            group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 whitespace-nowrap">
+                    메뉴 (Projects)
+                </div>
+            </a>
+
+            <!-- Nav Item: Contact (Reservation) -->
+            <a href="#contact" class="nav-link group relative z-10 p-2 outline-none" aria-label="예약 (Contact)">
+                <div
+                    class="nav-icon w-4 h-4 bg-ink-black/30 rounded-xl transition-all duration-500 ease-in-out
+                            group-hover:bg-stamp-red group-hover:rounded-sm group-hover:rotate-[135deg] group-focus:bg-stamp-red">
+                </div>
+                <div
+                    class="absolute top-1/2 right-full mr-4 -translate-y-1/2 px-3 py-1 bg-ink-black text-paper-bg text-xs font-dohyeon rounded opacity-0 -translate-x-2 pointer-events-none transition-all duration-300
+                            group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 whitespace-nowrap">
                     예약 (Contact)
                 </div>
-            </button>
+            </a>
         </div>
     </nav>
 
@@ -254,6 +281,10 @@
             </div>
         </footer>
     </main>
+
+    <!-- Modal Root -->
+    <div id="modal-root" class="hidden relative z-50" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    </div>
 
     <!-- Main JS -->
     <script src="js/main.js"></script>

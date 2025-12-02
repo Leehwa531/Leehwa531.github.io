@@ -173,14 +173,14 @@ function renderProjects() {
 
     projectGrid.innerHTML = '';
 
-    projects.forEach(project => {
+    projects.forEach((project) => {
         const card = document.createElement('div');
         card.className = `
             relative group overflow-hidden rounded-xl border-4 border-ink-black 
             min-h-96 flex flex-col justify-end p-6 
             transition-all duration-500 ease-in-out
             hover:shadow-[8px_8px_0px_0px_rgba(204,51,51,1)] 
-            ${project.colSpan} col-span-1
+            ${project.colSpan} col-span-1 cursor-pointer
         `;
 
         card.innerHTML = `
@@ -202,15 +202,17 @@ function renderProjects() {
                 </div>
 
                 <div class="flex justify-end transform md:translate-y-[200%] md:group-hover:translate-y-0 transition-transform duration-500 ease-in-out delay-200">
-                    <a href="${project.githubLink}" target="_blank" 
-                       class="pointer-events-auto inline-block py-3 px-8 border-2 border-paper-bg text-paper-bg 
+                    <button class="pointer-events-auto inline-block py-3 px-8 border-2 border-paper-bg text-paper-bg 
                               font-dohyeon text-xl rounded hover:bg-paper-bg hover:text-ink-black transition-colors duration-300">
-                        코드 보기 (Check it out)
-                    </a>
+                        상세 보기 (View Details)
+                    </button>
                 </div>
             </div>
-            <a href="${project.githubLink}" class="absolute inset-0 z-0" tabindex="-1"></a>
         `;
+
+        // Attach click listener safely
+        card.addEventListener('click', () => openProjectModal(project));
+
         projectGrid.appendChild(card);
     });
 }
@@ -777,4 +779,308 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactBtn) {
         contactBtn.addEventListener('click', copyEmail);
     }
+
+    // --- Navigation Active State Observer ---
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '-50% 0px -50% 0px', // Trigger when section is in the middle of the viewport
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Remove active state from all links
+                navLinks.forEach(link => {
+                    const icon = link.querySelector('.nav-icon');
+                    if (icon) {
+                        icon.classList.remove('bg-stamp-red', 'rounded-sm', 'rotate-[135deg]');
+                        icon.classList.add('bg-ink-black/30', 'rounded-xl');
+                    }
+                });
+
+                // Add active state to current link
+                const id = entry.target.getAttribute('id');
+                const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
+                if (activeLink) {
+                    const icon = activeLink.querySelector('.nav-icon');
+                    if (icon) {
+                        icon.classList.remove('bg-ink-black/30', 'rounded-xl');
+                        icon.classList.add('bg-stamp-red', 'rounded-sm', 'rotate-[135deg]');
+                    }
+                }
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
 });
+
+/* =====================================================================================
+   PROJECT DETAIL MODAL LOGIC
+   ===================================================================================== */
+
+// Mock Data for Project Details (Based on user request)
+const projectDetailsMock = {
+    metrics: [
+        { label: "API Latency", value: "0.15s", change: "93% 단축 (2.3s → 0.15s)", visual: 93 },
+        { label: "Concurrency", value: "1,000+", change: "TPS 안정적 유지", visual: 100 },
+        { label: "Test Coverage", value: "85%", change: "JUnit5 기반", visual: 85 },
+    ],
+    techDecisions: [
+        { stack: "Redis (Cache)", reason: "반복적인 금융 상품 조회 쿼리 부하 감소 및 응답 속도 개선" },
+        { stack: "Redisson (Lock)", reason: "스핀락 방식(Lettuce) 대비 Redis 부하가 적은 Pub/Sub 방식 채택" },
+        { stack: "QueryDSL", reason: "복잡한 동적 쿼리 및 Type-Safe한 쿼리 작성을 위해 선택" },
+        { stack: "Jenkins", reason: "Git Push 트리거를 통한 배포 자동화 구축 (Human Error 방지)" }
+    ],
+    contributions: [
+        "Spring Security + JWT 기반 인증/인가 시스템 구현",
+        "복잡한 금융 상품 검색을 위한 QueryDSL 동적 쿼리 최적화",
+        "Redis Caching 전략 (Look-aside) 도입으로 조회 성능 개선",
+        "선착순 이벤트 동시성 제어를 위한 Redis 분산락 적용"
+    ],
+    troubleshooting: {
+        title: "선착순 이벤트 동시성 재고 이슈 해결",
+        situation: "특판 상품 오픈 시 트래픽 폭주로 인해 실제 재고보다 많은 인원이 가입되는 'Over-selling' 현상 발생 (재고 -50 등 음수 발생).",
+        actions: [
+            { title: "Java synchronized", result: "실패: 다중 서버(Scale-out) 환경에서는 서버 간 동기화 불가 확인." },
+            { title: "DB Pessimistic Lock", result: "보류: 정합성은 보장되나, 레코드 락 대기 시간 증가로 성능 저하 우려." },
+            { title: "Redis Distributed Lock", result: "채택: Redisson의 Pub/Sub 방식을 사용하여 스핀락 부하를 줄이고 분산 환경 정합성 보장." }
+        ],
+        result: "JMeter 부하 테스트(User 1,000명) 결과, 데이터 정합성 100% 달성 및 평균 응답 시간 200ms 이내 유지."
+    }
+};
+
+function openProjectModal(project) {
+    console.log("openProjectModal called with:", project);
+    const modalRoot = document.getElementById('modal-root');
+    console.log("modalRoot element:", modalRoot);
+
+    if (!modalRoot) {
+        console.error("modal-root not found!");
+        return;
+    }
+
+    // Merge basic project info with mock details
+    const detailData = {
+        ...project,
+        ...projectDetailsMock,
+        title: project.title,
+        period: "2023.01 - 2023.06 (6개월)", // Example period
+        summary: project.description
+    };
+
+    const modalHTML = `
+        <div class="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm overflow-y-auto animate-fade-in">
+            <div class="flex min-h-full items-center justify-center p-4">
+
+                <!-- Modal Container -->
+                <div class="bg-white w-full max-w-6xl max-h-[90vh] md:rounded-2xl shadow-2xl relative flex flex-col font-sans text-[#333] overflow-hidden">
+
+                    <!-- Header Bar (Close Button) -->
+                    <div class="h-14 bg-[#f8f9fa] border-b border-[#eee] flex items-center justify-end px-6 shrink-0">
+                        <button onclick="closeProjectModal()" class="p-2 hover:bg-[#eee] rounded-full transition-colors">
+                            <i data-lucide="x" class="w-5 h-5 text-[#333]"></i>
+                        </button>
+                    </div>
+
+                    <!-- Scrollable Content Area -->
+                    <div class="flex-1 overflow-y-auto custom-scrollbar">
+                        <div class="flex flex-col md:flex-row min-h-full">
+
+                            <!-- --- Left Sidebar (Sticky Info) --- -->
+                            <div class="w-full md:w-[28%] bg-[#fdfbf7] border-r border-[#eee] flex flex-col gap-6 p-6 md:sticky md:top-0 md:h-full overflow-y-auto custom-scrollbar">
+
+                                <!-- Title & Meta -->
+                                <div>
+                                    <span class="inline-block px-2 py-0.5 bg-[#cc3333] text-white text-[10px] font-bold rounded mb-2">BACKEND LEAD</span>
+                                    <h1 class="text-2xl font-extrabold text-[#111] font-dohyeon mb-1 leading-tight">${detailData.title}</h1>
+                                    <p class="text-xs text-[#666] font-medium">${detailData.period}</p>
+                                </div>
+
+                                <!-- Navigation Links (Anchor) -->
+                                <div class="space-y-1">
+                                    ${['Overview', 'Tech Decisions', 'Troubleshooting', 'Architecture'].map((section, idx) => `
+                    <a href="#section-${idx}" class="block text-xs font-bold text-[#555] hover:text-[#cc3333] hover:bg-[#eee] px-2 py-1.5 rounded transition-colors flex justify-between items-center group">
+                      ${section} <i data-lucide="chevron-right" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                  `).join('')}
+                                </div>
+
+                                <!-- Key Metrics (Visualized) -->
+                                <div class="space-y-3">
+                                    <p class="text-[10px] font-bold text-[#888] uppercase tracking-wider">KEY METRICS</p>
+                                    ${detailData.metrics.map((m) => `
+                    <div class="bg-white p-3 rounded-lg border border-[#eee] shadow-sm">
+                      <div class="flex justify-between items-end mb-1">
+                        <span class="text-[10px] font-bold text-[#555]">${m.label}</span>
+                        <span class="text-sm font-extrabold text-[#cc3333] font-dohyeon">${m.value}</span>
+                      </div>
+                      <div class="w-full h-1.5 bg-[#f0f0f0] rounded-full overflow-hidden">
+                        <div class="h-full bg-[#cc3333]" style="width: ${m.visual}%"></div>
+                      </div>
+                      <p class="text-[9px] text-[#888] mt-1 text-right">${m.change}</p>
+                    </div>
+                  `).join('')}
+                                </div>
+
+                                <!-- Links -->
+                                <div class="mt-auto flex gap-2 pt-4">
+                                    <button class="flex-1 py-2 bg-[#333] text-white rounded text-xs font-bold hover:bg-black transition-colors flex items-center justify-center gap-1 shadow-md">
+                                        <i data-lucide="github" class="w-3 h-3"></i> Code
+                                    </button>
+                                    <button class="flex-1 py-2 bg-white border border-[#ddd] text-[#333] rounded text-xs font-bold hover:bg-[#f1f1f1] transition-colors flex items-center justify-center gap-1">
+                                        <i data-lucide="external-link" class="w-3 h-3"></i> Live
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- --- Main Content (Right Panel) --- -->
+                            <div class="w-full md:w-[72%] bg-white p-8 md:p-12 space-y-12">
+
+                                <!-- Engineer's Note -->
+                                <div class="bg-[#f8f9fa] border-l-4 border-[#333] p-5 rounded-r-xl">
+                                    <h3 class="font-bold text-[#333] mb-2 flex items-center gap-2"><i data-lucide="quote" class="w-4 h-4"></i> Engineer's Note</h3>
+                                    <p class="text-[#555] text-sm leading-relaxed font-sans">
+                                        "단순한 기능 구현을 넘어, <strong class="text-[#333] bg-[#fff3cd]">대용량 트래픽 상황에서의 데이터 정합성</strong>을 지키는 것에 집중했습니다.
+                                        Redis 분산락을 도입하여 동시성 문제를 해결하고, 인덱싱과 캐싱 전략으로 조회 성능을 극대화했습니다."
+                                    </p>
+                                </div>
+
+                                <!-- 1. Overview -->
+                                <div id="section-0">
+                                    <h2 class="text-xl font-bold mb-4 font-dohyeon flex items-center gap-2 text-[#333] border-b pb-2">
+                                        <span class="text-[#cc3333]">#</span> 프로젝트 개요
+                                    </h2>
+                                    <p class="text-[#555] text-sm leading-7 mb-4">${detailData.summary}</p>
+                                    <div class="bg-[#fdfbf7] p-4 rounded-lg border border-[#eee]">
+                                        <h4 class="text-xs font-bold text-[#888] uppercase mb-2">MY KEY CONTRIBUTIONS</h4>
+                                        <ul class="space-y-2">
+                                            ${detailData.contributions.map((item) => `
+                        <li class="flex gap-2 text-sm text-[#333]">
+                          <i data-lucide="check-circle-2" class="w-4 h-4 text-[#cc3333] shrink-0 mt-0.5"></i> ${item}
+                        </li>
+                      `).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- 2. Technical Decisions (Grid) -->
+                                <div id="section-1">
+                                    <h2 class="text-xl font-bold mb-4 font-dohyeon flex items-center gap-2 text-[#333] border-b pb-2">
+                                        <span class="text-[#cc3333]">#</span> 기술적 의사결정 (Why?)
+                                    </h2>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        ${detailData.techDecisions.map((decision) => `
+                      <div class="border border-[#eee] p-4 rounded-lg hover:border-[#cc3333]/30 transition-colors">
+                        <div class="text-sm font-bold text-[#333] mb-1 flex items-center gap-2">
+                          <span class="w-1.5 h-1.5 rounded-full bg-[#cc3333]"></span> ${decision.stack}
+                        </div>
+                        <p class="text-xs text-[#666] leading-relaxed">${decision.reason}</p>
+                      </div>
+                    `).join('')}
+                                    </div>
+                                </div>
+
+                                <!-- 3. Troubleshooting (Detailed) -->
+                                <div id="section-2">
+                                    <h2 class="text-xl font-bold mb-4 font-dohyeon flex items-center gap-2 text-[#333] border-b pb-2">
+                                        <span class="text-[#cc3333]">#</span> 트러블 슈팅 로그
+                                    </h2>
+
+                                    <div class="border border-[#eee] rounded-xl overflow-hidden">
+                                        <div class="bg-[#f8f9fa] px-5 py-3 border-b border-[#eee] flex items-center gap-2">
+                                            <i data-lucide="alert-triangle" class="w-4 h-4 text-orange-500"></i>
+                                            <span class="font-bold text-sm text-[#333]">Issue: ${detailData.troubleshooting.title}</span>
+                                        </div>
+
+                                        <div class="p-5 space-y-6">
+                                            <!-- Situation -->
+                                            <div>
+                                                <h4 class="text-xs font-bold text-[#888] uppercase mb-1">PROBLEM SITUATION</h4>
+                                                <p class="text-sm text-[#555] bg-[#fff5f5] p-3 rounded border border-red-100 text-red-800">${detailData.troubleshooting.situation}</p>
+                                            </div>
+
+                                            <!-- Process -->
+                                            <div>
+                                                <h4 class="text-xs font-bold text-[#888] uppercase mb-2">SOLVING PROCESS</h4>
+                                                <div class="space-y-2">
+                                                    ${detailData.troubleshooting.actions.map((act, i) => `
+                            <div class="flex items-center gap-3 p-3 rounded border text-sm ${i === 2 ? 'bg-[#f0fff4] border-green-200' : 'bg-white border-[#eee]'}">
+                              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded h-fit ${i === 2 ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-500'}">
+                                ${i === 2 ? 'SOLUTION' : `ATTEMPT ${i + 1}`}
+                              </span>
+                              <div class="flex-1">
+                                <span class="font-bold text-[#333] mr-2">${act.title}</span>
+                                <span class="text-[#666] text-xs">${act.result}</span>
+                              </div>
+                            </div>
+                          `).join('')}
+                                                </div>
+                                            </div>
+
+                                            <!-- Code Snippet (Proof) -->
+                                            <div>
+                                                <h4 class="text-xs font-bold text-[#888] uppercase mb-2">CORE IMPLEMENTATION</h4>
+                                                <div class="bg-[#1e1e1e] p-4 rounded-lg font-mono text-xs text-gray-300 overflow-x-auto border border-[#333]">
+                                                    <span class="text-purple-400">try</span> {<br />
+                                                        &nbsp;&nbsp;<span class="text-blue-400">boolean</span> available = lock.tryLock(10, 1, TimeUnit.SECONDS);<br />
+                                                    &nbsp;&nbsp;<span class="text-purple-400">if</span> (!available) <span class="text-purple-400">throw</span> <span class="text-blue-400">new</span> LockException();<br />
+                                                    &nbsp;&nbsp;<span class="text-green-400">// Business Logic...</span><br />
+                                                    } <span class="text-purple-400">finally</span> {<br />
+                                                        &nbsp;&nbsp;lock.unlock();<br />
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 4. Architecture -->
+                                <div id="section-3">
+                                    <h2 class="text-xl font-bold mb-4 font-dohyeon flex items-center gap-2 text-[#333] border-b pb-2">
+                                        <span class="text-[#cc3333]">#</span> 시스템 아키텍처
+                                    </h2>
+                                    <div class="w-full aspect-[2.5/1] bg-[#f8f9fa] border border-[#eee] rounded-xl flex items-center justify-center relative group overflow-hidden">
+                                        <div class="absolute inset-0 bg-[radial-gradient(#ccc_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
+                                        <div class="text-center z-10 p-6">
+                                            <i data-lucide="server" class="w-10 h-10 text-[#ccc] mx-auto mb-2"></i>
+                                            <p class="text-[#999] text-xs font-bold uppercase tracking-widest font-sans">Architecture Diagram Placeholder</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    modalRoot.innerHTML = modalHTML;
+    modalRoot.classList.remove('hidden');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+    // Initialize Icons
+    lucide.createIcons();
+
+    // Close on outside click
+    modalRoot.querySelector('.fixed').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+            closeProjectModal();
+        }
+    });
+}
+
+function closeProjectModal() {
+    const modalRoot = document.getElementById('modal-root');
+    modalRoot.innerHTML = '';
+    modalRoot.classList.add('hidden');
+    document.body.style.overflow = '';
+}
