@@ -6,11 +6,12 @@
 // Project Data
 const projects = [
     {
-        title: "WatchOut: Vision AI × Wearable IoT 융합 기반의 실시간 산업 안전 관제 플랫폼",
-        description: "ArcFace 기반의 고정밀 얼굴 식별 파이프라인과 Wear OS 네이티브 낙상 감지 모듈을 Kafka 이벤트 스트림으로 통합한 End-to-End 안전 솔루션",
+        title: "WatchOut",
+        description: "산업재해 예방을 위한 AI 영상 분석 스마트 안전관제 시스템",
         tags: ["Python / FastAPI", "Vision AI (ArcFace / ONNX)", "Wear OS (Kotlin)", "Apache Kafka", "Redis"],
-        image: "https://placehold.co/800x600?text=WatchOut+Architecture", // Placeholder for now
-        githubLink: "https://github.com", // Placeholder
+        image: "images/watchout_cover.jpg", // Placeholder for now
+        architectureImage: "images/watchout_arch.png",
+        githubLink: "https://github.com/WatchOut-Construct", // Placeholder
         demoLink: "#",
         colSpan: "lg:col-span-2", // Default span
 
@@ -87,6 +88,30 @@ else:
     return None
 `
         }
+    },
+    // 3. 예나, 지금 (Yena, Now) - [신규 추가 / 더미 데이터]
+    {
+        title: "예나, 지금 (Yena, Now)",
+        description: "멀리 있어도, 함께 추억을 남길 수 있는 온라인 포토부스 서비스",
+        tags: ["Spring Boot", "React", "WebRTC", "OpenVidu", "MySQL"], // TODO: 실제 스택으로 수정
+        image: "images/yena_cover.png",
+        architectureImage: "images/yena_arch.png",
+        githubLink: "#",
+        demoLink: "#",
+        colSpan: "lg:col-span-1",
+
+        // Detailed Info
+        period: "2024.XX - 2024.XX (6주)", // TODO: 기간 수정
+        role: "Backend Developer",
+        summary: "비대면 시대에도 소중한 사람과 함께 사진을 찍는 경험을 제공하기 위해, <strong class='text-[#333] bg-[#fff3cd]'>'WebRTC 기반의 실시간 영상 처리'</strong> 기술에 도전했습니다.", // [더미 문구]
+        contributions: [
+            "WebRTC(OpenVidu)를 활용한 다자간 화상 통신 및 실시간 포토 촬영 기능 구현", // [더미]
+            "Canvas API를 이용한 이미지 합성 및 프레임 꾸미기 기능 백엔드 처리", // [더미]
+            "AWS S3를 이용한 대용량 이미지 저장 및 Pre-signed URL 보안 적용" // [더미]
+        ],
+        metrics: null, // 나중에 채울 예정
+        techDecisions: null, // 나중에 채울 예정
+        troubleshooting: null // 나중에 채울 예정
     }
 ];
 
@@ -1069,16 +1094,17 @@ function openProjectModal(project) {
                   <h2 class="text-xl font-bold mb-4 font-dohyeon flex items-center gap-2 text-[#333] border-b pb-2">
                     <span class="text-[#cc3333]">#</span> 시스템 아키텍처
                   </h2>
-                  <div class="w-full aspect-[2.5/1] bg-[#f8f9fa] border border-[#eee] rounded-xl flex items-center justify-center relative group overflow-hidden">
-                    <div class="text-center">
-                      <i data-lucide="layers" class="w-12 h-12 text-[#ddd] mx-auto mb-2"></i>
-                      <p class="text-xs text-[#999] font-bold">Architecture Diagram Placeholder</p>
-                    </div>
-                    <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <button class="bg-white px-4 py-2 rounded-full shadow-lg text-xs font-bold text-[#333] hover:scale-105 transition-transform">
-                        크게 보기
-                      </button>
-                    </div>
+                  <div class="w-full bg-[#f8f9fa] border border-[#eee] rounded-xl flex items-center justify-center relative group overflow-hidden">
+                    
+                    ${detailData.architectureImage ? `
+                        <img src="${detailData.architectureImage}" alt="System Architecture" class="w-full h-auto object-contain max-h-[500px] hover:scale-105 transition-transform duration-500 cursor-zoom-in" onclick="window.open(this.src, '_blank')">
+                    ` : `
+                        <div class="text-center py-12">
+                            <i data-lucide="layers" class="w-12 h-12 text-[#ddd] mx-auto mb-2"></i>
+                            <p class="text-xs text-[#999] font-bold">Architecture Diagram Placeholder</p>
+                        </div>
+                    `}
+                    
                   </div>
                 </div>
 
