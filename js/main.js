@@ -575,7 +575,7 @@ function toggleAccordion(name) {
 }
 
 function copyEmail() {
-    const email = "yours@email.com";
+    const email = "qwg531@naver.com";
     navigator.clipboard.writeText(email).then(() => {
         showToast();
     }).catch(err => {
@@ -597,23 +597,33 @@ function showToast() {
 const awardsData = [
     {
         id: 1,
-        title: 'SSAFY 1학기 관통 프로젝트',
-        rank: '최우수상 (1위)',
-        issuer: '삼성전자 / SSAFY',
-        date: '2025.06',
-        desc: '금융 API를 활용한 맞춤형 예적금 추천 서비스 개발. 팀장 및 백엔드 리드 수행.',
+        title: 'SSAFY 13기 자율 프로젝트 우수상',
+        issuer: 'SSAFY',
+        date: '2025.11.27',
+        rank: '우수상',
+        desc: 'AI 기반 코드 리뷰 플랫폼 "Coditor" 개발 프로젝트로 자율 프로젝트 우수상 수상.',
         icon: 'trophy',
         iconColor: 'text-yellow-600'
     },
     {
         id: 2,
-        title: '동의대 캡스톤 디자인 경진대회',
-        rank: '금상',
-        issuer: '동의대학교 공과대학',
-        date: '2024.11',
-        desc: 'AI 기반 잔반 줄이기 프로젝트. 이미지 분석 서버 구축 및 데이터 모델링 담당.',
+        title: 'SSAFY 13기 특화 프로젝트 우수상',
+        issuer: 'SSAFY',
+        date: '2025.09.29',
+        rank: '우수상',
+        desc: 'WebRTC 기반 실시간 4컷 사진 촬영 플랫폼 "예나, 지금" 개발로 특화 프로젝트 우수상 수상.',
+        icon: 'award',
+        iconColor: 'text-blue-600'
+    },
+    {
+        id: 3,
+        title: 'SSAFY AI 챌린지 포트홀 탐지 경진대회',
+        issuer: 'SSAFY',
+        date: '2025.04 ~ 2025.05',
+        rank: '9위 / 247팀',
+        desc: 'AI 기반 도로 포트홀 탐지 챌린지: 상위 4% (9위/247팀) 달성',
         icon: 'medal',
-        iconColor: 'text-slate-400'
+        iconColor: 'text-orange-600'
     }
 ];
 
@@ -621,26 +631,42 @@ const certsData = [
     {
         id: 1,
         title: '정보처리기사',
-        type: '기사 (Engineer)',
+        type: 'Engineer Information Processing',
         issuer: '한국산업인력공단',
-        date: '2024.06.28',
-        number: '24-B0-123456',
-        birth: '990101',
-        desc: '소프트웨어 설계/구현 역량 인증',
-        themeColor: 'bg-[#2c3e50]',
-        textColor: 'text-white'
+        date: '2024.09.10',
+        number: '24202051427A',
+        birth: '1999.05.31',
+        themeColor: 'bg-gradient-to-r from-blue-600 to-blue-700'
     },
     {
         id: 2,
-        title: 'SQLD',
-        type: '국가공인 SQL 개발자',
+        title: 'ADsP',
+        type: 'Advanced Data Analytics Semi-Professional',
         issuer: '한국데이터산업진흥원',
-        date: '2023.12.15',
-        number: 'SQLD-23-0987',
-        birth: '990101',
-        desc: 'DB 모델링 및 쿼리 작성 능력',
-        themeColor: 'bg-[#8c7b75]',
-        textColor: 'text-white'
+        date: '2025.03.21',
+        number: 'ADsP-052000123',
+        birth: '1999.05.31',
+        themeColor: 'bg-gradient-to-r from-green-600 to-green-700'
+    },
+    {
+        id: 3,
+        title: 'SQLD',
+        type: 'SQL Developer',
+        issuer: '한국데이터산업진흥원',
+        date: '2025.06.27',
+        number: 'SQLD-048000456',
+        birth: '1999.05.31',
+        themeColor: 'bg-gradient-to-r from-purple-600 to-purple-700'
+    },
+    {
+        id: 4,
+        title: '토익스피킹 IM2',
+        type: 'TOEIC Speaking Intermediate Mid 2',
+        issuer: 'YBM',
+        date: '2025.09.06',
+        number: '1A2B3C4D5E6F',
+        birth: '1999.05.31',
+        themeColor: 'bg-gradient-to-r from-red-600 to-red-700'
     }
 ];
 
@@ -649,37 +675,46 @@ const activitiesData = [
         id: 1,
         title: '삼성청년SW아카데미 (SSAFY) 13기',
         role: '교육생 (Java 전공)',
-        period: '2025.01 - 현재',
+        period: '2025.01 - 2025.12',
         desc: '알고리즘 집중 교육 및 1600시간의 몰입형 코딩 교육 수료 중. 매주 2회 이상의 코드 리뷰와 3회의 팀 프로젝트 수행.',
-        highlight: '현재 진행중',
+        highlight: '수료',
         icon: 'code'
     },
     {
         id: 2,
         title: '동의대 알고리즘 소모임 "COTE"',
         role: '운영진 및 멘토',
-        period: '2024.03 - 2024.12',
-        desc: '후배들을 위한 알고리즘 튜터링 진행 (백준 골드 달성 5명 배출). 주 1회 모의 코딩테스트 출제 및 해설.',
+        period: '2025.06 - 2025.12',
+        desc: '후배들을 위한 알고리즘 튜터링 진행 (백준 골드 달성 3명 배출). 주 1회 모의 코딩테스트 출제 및 해설.',
         highlight: null,
         icon: 'users'
     },
     {
         id: 3,
-        title: '부산 IT 연합 해커톤',
-        role: '백엔드 개발자',
-        period: '2023.08 (무박 2일)',
-        desc: '부산 지역 대학생들과 협업하여 "부산 맛집 지도" API 서버를 24시간 내에 구축 및 배포.',
-        highlight: null,
-        icon: 'map-pin'
-    },
-    {
-        id: 4,
         title: '동의대학교 컴퓨터공학과',
         role: '졸업',
         period: '2018.03 - 2025.02',
-        desc: '컴퓨터 구조, 운영체제, 네트워크 등 CS 기초 심화 학습. 학점 4.0/4.5 졸업.',
+        desc: '컴퓨터 구조, 운영체제, 네트워크 등 CS 기초 심화 학습.',
         highlight: '학사 취득',
         icon: 'graduation-cap'
+    },
+    {
+        id: 4,
+        title: 'D-COSS 미래설계동아리',
+        role: '동아리원',
+        period: '2024.03 - 2025.02',
+        desc: '미래 설계 및 진로 탐색 동아리 활동. 동료 학생들과 함께 진로 설계 및 멘토링 프로그램 참여.',
+        highlight: null,
+        icon: 'trophy'
+    },
+    {
+        id: 5,
+        title: '바이오헬스데이터학 부전공',
+        role: '이수',
+        period: '2018.03 - 2025.02',
+        desc: '융합 분야 학습을 통해 데이터 분석 및 헬스케어 도메인에 대한 이해도 향상.',
+        highlight: null,
+        icon: 'heart-pulse'
     }
 ];
 
@@ -690,9 +725,9 @@ function renderAwards() {
     if (!container) return;
 
     const tabs = [
-        { id: 'awards', label: '🏆 맛집 인증서', count: awardsData.length },
-        { id: 'certs', label: '💳 국가 공인 면허', count: certsData.length },
-        { id: 'activities', label: '👣 수련의 길', count: activitiesData.length }
+        { id: 'awards', label: '🏆 수상 내역', count: awardsData.length },
+        { id: 'certs', label: '💳 자격 증명', count: certsData.length },
+        { id: 'activities', label: '👣 활동 이력', count: activitiesData.length }
     ];
 
     let html = `
@@ -1313,11 +1348,11 @@ function renderTechStack() {
             <!-- 섹션 헤더 -->
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-dohyeon mb-4 relative inline-block">
-                    <span class="relative z-10">엄선된 기술 스택</span>
+                    <span class="relative z-10">Engineering Stack</span>
                     <!-- 밑줄 효과 -->
                     <div class="absolute bottom-1 left-0 w-full h-3 bg-stamp-red/20 -rotate-1"></div>
                 </h2>
-                <p class="text-xl text-ink-black/70 font-jua mt-2">사용 가능한 재료와 숙련도입니다.</p>
+                <p class="text-xl text-ink-black/70 font-jua mt-2">안정적인 서비스 운영을 위해 깊이 있게 학습한 기술 스택입니다.</p>
             </div>
             
             <!-- 기술 카드 그리드 -->
@@ -1374,3 +1409,192 @@ function renderTechStack() {
 document.addEventListener('DOMContentLoaded', () => {
     renderTechStack();
 });
+
+// renderAwards 함수
+function renderAwards() {
+    const container = document.getElementById('awards');
+    if (!container) return;
+
+    const tabs = [
+        { id: 'awards', label: '🏆 수상 내역', count: awardsData.length },
+        { id: 'certs', label: '💳 자격 증명', count: certsData.length },
+        { id: 'activities', label: '👣 활동 이력', count: activitiesData.length }
+    ];
+
+    let html = `
+        <div class="absolute inset-0 bg-pattern-dots pointer-events-none"></div>
+        <div class="max-w-5xl mx-auto relative z-10 px-4">
+            <!-- Header -->
+            <div class="mb-12 text-center">
+                <h1 class="text-4xl md:text-5xl font-dohyeon mb-4 relative inline-block animate-fade-in-up">
+                    <span class="relative z-10">Journey & Milestones</span>
+                    <div class="absolute bottom-1 left-0 w-full h-3 bg-stamp-red/20 -rotate-1"></div>
+                </h1>
+                <p class="text-xl text-ink-black/70 mt-4 animate-fade-in-up delay-100">
+                    치열한 고민과 몰입으로 일궈낸 성장의 증거들입니다.
+                </p>
+
+                <!-- Tabs -->
+                <div class="flex flex-wrap justify-center gap-4 mt-8 animate-fade-in-up delay-200">
+                    ${tabs.map(tab => `
+                        <button onclick="switchAwardsTab('${tab.id}')" 
+                            class="px-6 py-2 rounded-full border-2 border-ink-black font-dohyeon text-lg transition-all transform hover:-translate-y-1 relative group 
+                            ${activeAwardsTab === tab.id ? 'bg-ink-black text-paper-bg shadow-[4px_4px_0px_0px_#cc3333]' : 'bg-paper-bg text-ink-black hover:bg-ink-black/5'}">
+                            ${tab.label}
+                            <span class="ml-2 text-sm px-2 py-0.5 rounded-full ${activeAwardsTab === tab.id ? 'bg-stamp-red text-white' : 'bg-ink-black/10 text-ink-black'}">
+                                ${tab.count}
+                            </span>
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+    `;
+
+    // Content
+    if (activeAwardsTab === 'awards') {
+        html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-8">`;
+        awardsData.forEach((item, index) => {
+            html += `
+                <div class="group relative bg-white border-2 border-ink-black p-6 shadow-[8px_8px_0px_0px_rgba(51,51,51,0.1)] hover:shadow-[12px_12px_0px_0px_rgba(204,51,51,0.8)] transition-all duration-300 transform hover:-translate-y-1 hover:-translate-x-1 animate-fade-in-up" style="animation-delay: ${index * 0.15}s">
+                    <div class="flex flex-col items-center text-center relative z-10 pt-2">
+                        <div class="w-16 h-16 bg-paper-bg border-2 border-ink-black rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i data-lucide="${item.icon}" class="w-8 h-8 ${item.iconColor}"></i>
+                        </div>
+                        <h3 class="text-2xl font-dohyeon mb-2 break-keep">${item.title}</h3>
+                        <div class="flex items-center gap-2 mb-4 text-sm text-ink-black/60 font-sans bg-paper-bg px-3 py-1 rounded-full">
+                            <span class="font-bold text-ink-black">${item.issuer}</span>
+                            <span class="text-ink-black/30">|</span>
+                            <span>${item.date}</span>
+                        </div>
+                        <p class="text-ink-black/80 bg-paper-bg/50 p-4 rounded-lg border border-ink-black/10 w-full mb-4 leading-relaxed font-sans text-sm">
+                            ${item.desc}
+                        </p>
+                        
+                        <!-- Stamp Effect -->
+                        <div class="absolute top-0 right-0 transform rotate-[15deg] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            <div class="w-20 h-20 border-4 border-stamp-red rounded-full flex items-center justify-center text-stamp-red font-dohyeon text-sm text-center leading-tight mask-image-grunge animate-stamp-bounce bg-white/80 backdrop-blur-sm shadow-lg">
+                                <div class="w-[90%] h-[90%] border border-stamp-red rounded-full flex flex-col justify-center items-center p-1">
+                                    <span class="text-lg">${item.rank.split(' ')[0]}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-0 right-0 transform rotate-[15deg] opacity-40 group-hover:opacity-0 transition-opacity duration-300 grayscale">
+                            <i data-lucide="medal" class="w-16 h-16 text-ink-black/20"></i>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        html += `</div>`;
+    } else if (activeAwardsTab === 'certs') {
+        html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">`;
+        certsData.forEach((item, index) => {
+            html += `
+                <div class="relative w-full aspect-[1.586/1] rounded-xl overflow-hidden shadow-xl transition-all hover:scale-[1.02] hover:shadow-2xl duration-300 group select-none animate-fade-in-up" style="animation-delay: ${index * 0.15}s">
+                    <div class="absolute inset-0 bg-[#f8f9fa]">
+                        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 15px 15px"></div>
+                        <div class="absolute right-0 bottom-0 w-48 h-48 bg-ink-black/5 rounded-full blur-3xl transform translate-x-10 translate-y-10"></div>
+                    </div>
+
+                    <div class="absolute top-0 left-0 right-0 h-[28%] ${item.themeColor} flex items-center px-5 shadow-md z-10">
+                        <div class="w-10 h-10 border-2 border-white/20 rounded-full flex items-center justify-center bg-white/10">
+                            <i data-lucide="award" class="text-white w-6 h-6"></i>
+                        </div>
+                        <div class="ml-3 flex flex-col">
+                            <span class="text-white font-dohyeon text-lg tracking-widest leading-none">LICENSE</span>
+                            <span class="text-white/60 text-[10px] uppercase font-sans tracking-widest">National Technical Qualification</span>
+                        </div>
+                        <div class="ml-auto w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-200 via-yellow-400 to-yellow-600 shadow-inner flex items-center justify-center opacity-90 border border-yellow-100/50">
+                            <i data-lucide="fingerprint" class="w-6 h-6 text-yellow-900/50"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute top-[28%] inset-x-0 bottom-0 p-5 flex">
+                        <div class="w-[28%] flex flex-col items-center gap-2 pt-1">
+                            <div class="w-full aspect-[3/4] bg-slate-200 border border-slate-300 flex items-center justify-center overflow-hidden relative shadow-inner rounded-sm">
+                                <i data-lucide="user" class="w-12 h-12 text-slate-400"></i>
+                                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent pointer-events-none"></div>
+                                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-cyan-400/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-overlay"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex-1 pl-5 flex flex-col justify-between py-1 relative z-10">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800 font-dohyeon leading-none tracking-tight">${item.title}</h3>
+                                <p class="text-xs text-slate-500 font-sans mt-1 uppercase tracking-wide">${item.type}</p>
+                            </div>
+
+                            <div class="space-y-1.5 font-sans text-xs text-slate-700 mt-2">
+                                <div class="flex justify-between border-b border-slate-200 pb-1">
+                                    <span class="text-slate-400">성명</span>
+                                    <span class="font-bold tracking-widest text-slate-900">박정훈</span>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-200 pb-1">
+                                    <span class="text-slate-400">생년월일</span>
+                                    <span class="font-mono tracking-wide">${item.birth}</span>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-200 pb-1">
+                                    <span class="text-slate-400">발급번호</span>
+                                    <span class="font-mono tracking-wide">${item.number}</span>
+                                </div>
+                                <div class="flex justify-between pt-0.5">
+                                    <span class="text-slate-400">발급기관</span>
+                                    <span class="font-bold text-slate-800">${item.issuer}</span>
+                                </div>
+                            </div>
+
+                            <div class="absolute bottom-2 right-2 w-14 h-14 border-2 border-yellow-600/30 rounded-full flex items-center justify-center group-hover:border-yellow-600/60 transition-colors">
+                                <div class="w-10 h-10 border border-yellow-600/50 rounded-full flex items-center justify-center bg-yellow-600/5">
+                                    <i data-lucide="check-circle" class="w-6 h-6 text-yellow-600/50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        html += `</div>`;
+    } else if (activeAwardsTab === 'activities') {
+        html += `<div class="relative max-w-3xl mx-auto pl-4 md:pl-0">
+            <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-ink-black/20 md:-translate-x-1/2 border-l-2 border-dashed border-ink-black/30 h-full"></div>
+        `;
+        activitiesData.forEach((item, index) => {
+            html += `
+                <div class="relative mb-12 flex flex-col md:flex-row items-start w-full animate-fade-in-up ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}" style="animation-delay: ${index * 0.15}s">
+                    <div class="flex-1 hidden md:block"></div>
+                    <div class="absolute left-[-7px] md:left-1/2 top-[24px] w-4 h-4 bg-stamp-red border-2 border-paper-bg rounded-full md:-translate-x-1/2 z-10 shadow-md transform transition-transform hover:scale-150"></div>
+                    ${item.highlight ? `<div class="absolute left-[-15px] md:left-1/2 top-[16px] w-8 h-8 bg-stamp-red/20 rounded-full md:-translate-x-1/2 animate-ping"></div>` : ''}
+
+                    <div class="flex-1 w-full pl-4 md:pl-0 ${index % 2 === 0 ? 'md:pr-12 md:pl-0' : 'md:pl-12 md:pr-0'}">
+                        <div class="bg-white border-2 border-ink-black p-5 rounded-lg shadow-[4px_4px_0px_0px_rgba(51,51,51,0.1)] hover:shadow-[6px_6px_0px_0px_rgba(204,51,51,0.5)] transition-all relative group transform hover:-translate-y-1">
+                            <div class="absolute top-[22px] w-4 h-4 bg-white border-b-2 border-l-2 border-ink-black transform rotate-45 
+                                ${index % 2 === 0 ? 'left-[-14px] md:right-[-10px] md:left-auto md:border-t-2 md:border-r-2 md:border-b-0 md:border-l-0' : 'left-[-14px] md:left-[-10px]'}">
+                            </div>
+
+                            ${item.highlight ? `<span class="absolute -top-3 right-4 bg-stamp-red text-white text-xs px-2 py-1 rounded font-dohyeon shadow-sm animate-pulse">${item.highlight}</span>` : ''}
+
+                            <div class="flex items-center gap-3 mb-2 text-ink-black/50 text-sm font-bold">
+                                <i data-lucide="calendar" class="w-4 h-4"></i>
+                                ${item.period}
+                            </div>
+                            
+                            <h3 class="text-xl font-dohyeon mb-1 group-hover:text-stamp-red transition-colors">${item.title}</h3>
+                            <p class="text-ink-black font-bold text-sm mb-3 border-l-2 border-stamp-red pl-2">${item.role}</p>
+                            <p class="text-ink-black/80 text-sm leading-relaxed bg-paper-bg p-3 rounded-md border border-ink-black/5">
+                                ${item.desc}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        html += `<div class="absolute bottom-0 left-[-9px] md:left-1/2 w-5 h-5 bg-ink-black md:-translate-x-1/2 rounded-full z-10"></div></div>`;
+    }
+
+    html += `</div>`;
+    container.innerHTML = html;
+
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
+}

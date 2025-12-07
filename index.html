@@ -6,6 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>박정훈 | Backend Engineer Portfolio</title>
 
+    <!-- 기본 메타 정보 -->
+    <meta name="description" content="데이터의 무결성을 최우선으로 하는 백엔드 엔지니어 박정훈의 포트폴리오입니다.">
+    <meta name="keywords" content="백엔드, 자바, 스프링부트, SSAFY, 포트폴리오, 박정훈">
+    <meta name="author" content="박정훈">
+
+    <!-- Open Graph (카카오톡, 페이스북, 링크드인 미리보기) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://leehwa531.github.io/">
+    <meta property="og:title" content="박정훈 | Backend Engineer Portfolio">
+    <meta property="og:description" content="0.1초의 차이를 만드는 집요함. SSAFY 13기 백엔드 개발자의 기록.">
+    <meta property="og:image" content="images/coditor_cover.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="박정훈 | Backend Engineer Portfolio">
+    <meta name="twitter:description" content="0.1초의 차이를 만드는 집요함. SSAFY 13기 백엔드 개발자의 기록.">
+    <meta name="twitter:image" content="images/coditor_cover.png">
+
+    <!-- Favicon (브라우저 탭 아이콘) -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+
     <!-- Google Fonts: Do Hyeon, Jua -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +52,7 @@
                         'paper-bg': '#fdfbf7', // 옅은 미색 (한지 느낌)
                         'ink-black': '#333333', // 진한 먹물색
                         'stamp-red': '#cc3333', // 도장 인주색
+                        'velog-green': '#20c997', // 벨로그 그린
                     }
                 }
             }
@@ -149,43 +172,122 @@
     <!-- Main Content -->
     <main class="pt-16 md:pt-0">
 
-        <!-- Hero Section -->
+        <!-- Hero Section / About Section -->
         <section id="about"
-            class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
-            <div class="max-w-4xl mx-auto z-10">
-                <p class="text-xl md:text-2xl text-stamp-red mb-4 font-dohyeon tracking-wider animate-fade-in-up">
-                    BACKEND ENGINEER
-                </p>
-                <h1
-                    class="text-5xl md:text-7xl lg:text-8xl font-dohyeon mb-8 leading-tight animate-fade-in-up delay-100">
-                    보이지 않는 곳에서
-                    <span class="relative inline-block mt-2">
-                        시스템의 가치를 증명합니다
-                        <div class="absolute -bottom-2 left-0 w-full h-4 bg-stamp-red/20 -z-10 transform -rotate-1">
-                        </div>
-                    </span>
-                </h1>
-                <p
-                    class="text-lg md:text-xl text-ink-black/80 max-w-2xl mx-auto leading-relaxed mb-12 animate-fade-in-up delay-200">
-                    안녕하세요, 박정훈입니다. 화려한 기능보다 트래픽을 견디는 구조와 데이터 무결성을 최우선으로 생각합니다.<br>
-                    비즈니스 요구사항을 명확한 기술 언어로 번역하고, 0.1초의 성능 개선을 위해 끝없이 고민하는 엔지니어입니다.
-                </p>
+            class="min-h-screen flex items-center justify-center relative overflow-hidden bg-white py-24 border-b border-gray-200">
 
-                <div class="flex justify-center gap-4 animate-fade-in-up delay-300">
-                    <a href="#projects"
-                        class="px-8 py-3 border-2 border-ink-black bg-ink-black text-paper-bg hover:bg-transparent hover:text-ink-black transition-all duration-300 rounded-lg text-lg">
-                        프로젝트 보기
-                    </a>
-                    <a href="https://github.com" target="_blank"
-                        class="px-8 py-3 border-2 border-ink-black hover:bg-ink-black hover:text-paper-bg transition-all duration-300 rounded-lg text-lg">
-                        GitHub
-                    </a>
-                </div>
+            <!-- Background Text (Decoration) -->
+            <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0 opacity-[0.03]">
+                <span class="text-[15vw] font-black font-dohyeon text-ink-black leading-none whitespace-nowrap">DEEP
+                    DIVE</span>
             </div>
 
-            <!-- Decorative Elements -->
-            <div class="absolute top-1/4 left-10 w-24 h-24 border-4 border-stamp-red/10 rounded-full blur-sm"></div>
-            <div class="absolute bottom-1/4 right-10 w-32 h-32 border-4 border-stamp-red/5 rounded-full blur-sm"></div>
+            <div class="max-w-6xl mx-auto px-6 w-full relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+
+                <!-- Left: Photo Composition -->
+                <div class="relative w-full max-w-md mx-auto lg:ml-0 group cursor-pointer">
+                    <!-- Red Block -->
+                    <div
+                        class="absolute top-0 right-0 w-3/4 h-full bg-stamp-red transform translate-x-4 -translate-y-4 transition-transform duration-500 group-hover:translate-x-6 group-hover:-translate-y-6">
+                    </div>
+                    <!-- Black Block -->
+                    <div
+                        class="absolute bottom-0 left-0 w-3/4 h-3/4 bg-ink-black transform -translate-x-4 translate-y-4 transition-transform duration-500 group-hover:-translate-x-6 group-hover:translate-y-6">
+                    </div>
+
+                    <!-- Main Photo -->
+                    <div
+                        class="relative aspect-[3/4] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 z-10 shadow-2xl">
+                        <!-- ★ 사진 교체: 본인 사진 경로로 변경해주세요 -->
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Park Junghoon"
+                            class="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-700">
+
+                        <!-- Badge -->
+                        <div
+                            class="absolute top-4 left-4 bg-ink-black text-white text-xs font-bold px-3 py-1 font-dohyeon opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 border border-white/20">
+                            SSAFY 13th
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Text Content (Copywriting Focused) -->
+                <div
+                    class="text-left space-y-8 bg-white/90 backdrop-blur-sm p-8 lg:p-12 shadow-xl lg:-ml-20 z-20 border-l-4 border-stamp-red">
+
+                    <!-- Header -->
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2 mb-3">
+                            <span
+                                class="px-2 py-0.5 bg-ink-black text-white text-[10px] font-bold tracking-widest uppercase">Since
+                                1999</span>
+                            <span
+                                class="px-2 py-0.5 border border-stamp-red text-stamp-red text-[10px] font-bold tracking-widest uppercase">Java
+                                Backend</span>
+                            <span
+                                class="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold tracking-widest uppercase border border-gray-200">+
+                                AI Engineering</span>
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-dohyeon leading-[1.1] text-ink-black">
+                            사용자의 0.1초를 위해<br>
+                            <span class="text-stamp-red relative inline-block">
+                                <span class="relative z-10">집요하게</span>
+                                <span class="absolute bottom-1 left-0 w-full h-3 bg-stamp-red/20 -z-0"></span>
+                            </span> 파고듭니다.
+                        </h2>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="space-y-4 text-lg text-gray-700 font-sans font-medium leading-relaxed">
+                        <p>
+                            <strong>"Why?"</strong>라는 질문을 멈추지 않는 개발자 박정훈입니다.<br>
+                            프레임워크의 마법에 기대기보다, 그 이면의 동작 원리를 이해할 때 비로소 내 것이 된다고 믿습니다.
+                        </p>
+                        <p class="text-sm border-l-2 border-gray-300 pl-4 text-gray-600">
+                            동의대 컴공과와 SSAFY 13기에서의 <strong>1,600시간의 몰입</strong>을 통해,<br>
+                            단순 구현을 넘어 <span class="text-ink-black font-bold border-b border-stamp-red/50">데이터
+                                무결성</span>과 <span class="text-ink-black font-bold border-b border-stamp-red/50">시스템
+                                안정성</span>을 책임지는 엔지니어로 성장하고 있습니다.
+                        </p>
+                    </div>
+
+                    <!-- Links Grid -->
+                    <div
+                        class="pt-8 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-8 border-t border-gray-200 mt-8">
+
+                        <!-- GitHub -->
+                        <a href="https://github.com/Leehwa531" target="_blank" class="group flex items-center gap-2">
+                            <span
+                                class="text-xl font-dohyeon text-ink-black group-hover:text-stamp-red transition-colors">GITHUB</span>
+                            <i data-lucide="arrow-up-right"
+                                class="w-5 h-5 text-gray-300 group-hover:text-stamp-red transition-colors group-hover:translate-x-1 transform"></i>
+                        </a>
+
+                        <div class="hidden sm:block w-px h-6 bg-gray-300"></div>
+
+                        <!-- Velog -->
+                        <a href="https://velog.io/@qwg531/posts" target="_blank" class="group flex items-center gap-2">
+                            <span
+                                class="text-xl font-dohyeon text-ink-black group-hover:text-velog-green transition-colors">VELOG</span>
+                            <i data-lucide="arrow-up-right"
+                                class="w-5 h-5 text-gray-300 group-hover:text-velog-green transition-colors group-hover:translate-x-1 transform"></i>
+                        </a>
+
+                        <div class="hidden sm:block w-px h-6 bg-gray-300"></div>
+
+                        <!-- Projects (Scroll Down) -->
+                        <a href="#projects" class="group flex items-center gap-2 cursor-pointer">
+                            <span
+                                class="text-xl font-dohyeon text-ink-black group-hover:text-blue-600 transition-colors">PROJECTS</span>
+                            <i data-lucide="arrow-down"
+                                class="w-5 h-5 text-gray-300 group-hover:text-blue-600 transition-colors group-hover:translate-y-1 transform"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
         </section>
 
         <!-- Tech Stack Section -->
