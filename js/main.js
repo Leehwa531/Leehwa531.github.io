@@ -89,7 +89,7 @@ else:
 `
         }
     },
-    // 3. 예나, 지금 (Yena, Now) - [신규 추가 / 더미 데이터]
+    // 2. 예나, 지금 (Yena, Now) - [신규 추가 / 더미 데이터]
     {
         title: "예나, 지금 (Yena, Now)",
         description: "멀리 있어도, 함께 추억을 남길 수 있는 온라인 포토부스 서비스",
@@ -112,6 +112,89 @@ else:
         metrics: null, // 나중에 채울 예정
         techDecisions: null, // 나중에 채울 예정
         troubleshooting: null // 나중에 채울 예정
+    },
+    // 3. Coditor (Final Version)
+    {
+        title: "Coditor",
+        description: "개발자의 하루를 성장의 기록으로, AI 기반 GitHub 멘토링 & 포트폴리오 에이전트",
+        tags: ["LangGraph", "FastAPI", "Spring Boot", "Redis", "MySQL", "Prompt Engineering"],
+        image: "images/coditor_cover.png",
+        architectureImage: "images/coditor_arch.png",
+        githubLink: "https://github.com/Leehwa531/Coditor", // [반영 완료] 실제 링크 연결
+        demoLink: "#",
+        colSpan: "lg:col-span-2",
+
+        // Detailed Info
+        period: "2024.01 - 2024.02 (6주)",
+        role: "Project Lead & AI Architect (기획/설계/개발 총괄)",
+        summary: "팀의 기술적 방향성을 제시하고 개발 문화를 정립한 리더이자 핵심 엔지니어입니다. 단순한 아카이빙 서비스를 넘어, <strong class='text-[#333] bg-[#fff3cd]'>'개발자의 성장을 증명하는 AI 파트너'</strong>로 제품을 고도화했습니다. LangGraph 기반의 AI 파이프라인부터 ERD, 컨벤션 설계까지 프로젝트의 전 과정을 주도했습니다.",
+        contributions: [
+            "LangGraph AI 파이프라인 설계: 사용자의 의도(검색/생성/분석)를 파악하고 도구를 선택하는 상태 기반(State Machine) 에이전트 아키텍처 구축 및 최적화",
+            "프로젝트 전체 설계 및 기술 리딩: Spring Boot(메인)와 FastAPI(AI)를 연동한 MSA 구조 설계, 대용량 채팅 처리를 위한 정규화된 ERD 설계",
+            "개발 문화 및 컨벤션 정립: 팀원 간의 협업 효율을 위해 Git-Flow 브랜치 전략, 커밋 메시지 컨벤션, 코드 리뷰 프로세스 제정 및 전파",
+            "Redis 성능 최적화: 태그 필터링 조회 시 발생하는 O(N) 풀스캔 문제를 자료구조 재설계를 통해 O(1)로 단축 (호출 2,500회 → 2회)",
+            "비동기 시스템 도입: BackgroundTasks를 활용해 AI 응답 속도를 40초에서 3초로 92% 단축하고 사용자 경험(UX) 개선"
+        ],
+        metrics: [
+            {
+                label: "API 응답 속도",
+                value: "3s 이내",
+                visual: 92,
+                change: "40s → 3s (비동기 처리 도입)"
+            },
+            {
+                label: "데이터 조회 효율",
+                value: "99% 개선",
+                visual: 100,
+                change: "Redis 호출 2500회 → 2회"
+            },
+            {
+                label: "GitHub 연동",
+                value: "100%",
+                visual: 100,
+                change: "Repo/Commit/Issue 자동 분석"
+            }
+        ],
+        techDecisions: [
+            {
+                stack: "LangGraph",
+                reason: "단순 LLM 호출(Chain)로는 불가능한 '순환형(Cyclic) 추론'과 '상태 유지(Stateful)'가 필수적이었습니다. 에이전트의 판단 과정을 명확한 그래프로 제어하기 위해 도입했습니다."
+            },
+            {
+                stack: "Redis (Custom Design)",
+                reason: "단순 캐싱을 넘어, '인기 태그 필터링' 같은 복잡한 실시간 집계를 RDB 부하 없이 O(1)로 처리하기 위해 Sorted Set과 Hash를 조합한 커스텀 자료구조를 설계했습니다."
+            },
+            {
+                stack: "FastAPI + BackgroundTasks",
+                reason: "사용자에게 즉각적인 반응(채팅 응답)을 보장하면서, 로그 저장이나 데이터 분석 같은 무거운 후처리 작업을 논블로킹으로 처리하기 위해 채택했습니다."
+            }
+        ],
+        troubleshooting: {
+            title: "Redis 필터링 조회 성능 이슈 (O(N) → O(1) 최적화)",
+            situation: "프로젝트 태그를 '인기순 + 타입별'로 조회하는 기능 구현 시, 단일 Sorted Set 사용으로 인해 애플리케이션에서 수만 건의 데이터를 가져와 필터링하는 '인메모리 풀스캔'이 발생, 응답이 수 초 이상 지연됨.",
+            actions: [
+                {
+                    title: "AS-IS (Bad)",
+                    result: "모든 태그를 하나의 ZSET에 저장. 'TECH' 타입 20개를 찾기 위해 최악의 경우 2,500번의 Redis 호출과 5만 건의 데이터 전송 발생."
+                },
+                {
+                    title: "TO-BE (Solution)",
+                    result: "조회 조건(Type) 자체를 Key로 분리하는 'Read-Optimized' 설계 적용. (ex. `tag:rank:TECH`, `tag:rank:DOMAIN`)"
+                }
+            ],
+            codeSnippet: `
+// 개선된 로직 (Pseudo-code)
+// 1. 타입별로 미리 분류된 ZSET에서 상위 20개 UUID만 조회 (O(logN))
+Set<String> topTagIds = redis.zrevrange("tag:rank:" + requestType, 0, 19);
+
+// 2. 조회된 UUID로 상세 정보를 Pipeline으로 한 번에 조회 (RTT 최소화)
+List<TagInfo> details = redis.executePipelined(connection -> {
+    topTagIds.forEach(id -> connection.hgetAll("tag:info:" + id));
+});
+
+// 결과: 수천 번의 호출을 단 2번의 네트워크 통신으로 해결
+`
+        }
     }
 ];
 
