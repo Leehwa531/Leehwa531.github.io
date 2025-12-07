@@ -7,95 +7,90 @@
 const projects = [
     {
         title: "WatchOut",
-        description: "산업재해 예방을 위한 AI 영상 분석 스마트 안전관제 시스템",
-        tags: ["Python / FastAPI", "Vision AI (ArcFace / ONNX)", "Wear OS (Kotlin)", "Apache Kafka", "Redis"],
-        image: "images/watchout_cover.jpg", // Placeholder for now
+        description: "0.5초의 골든타임을 사수하는 산업재해 예방 AI 관제 플랫폼",
+        tags: ["Python / FastAPI", "Vision AI", "Wear OS (Kotlin)", "Apache Kafka", "Redis"],
+        image: "images/watchout_cover.jpg",
         architectureImage: "images/watchout_arch.png",
-        githubLink: "https://github.com/WatchOut-Construct", // Placeholder
+
+        // ★ [Carousel Data]
+        serviceImages: [
+            { src: "images/watchout_cover.jpg", caption: "WatchOut 서비스 메인 표지" },
+            { src: "images/watchout_대시보드.gif", caption: "실시간 통합 관제 대시보드 (메인 화면)" },
+            { src: "images/watchout_CCTV확인.png", caption: "AI 객체 인식 및 실시간 CCTV 모니터링" },
+            { src: "images/watchout_공지발송.gif", caption: "현장 전체/구역별 긴급 공지사항 발송" },
+            { src: "images/watchout_CCTV_CRUD.gif", caption: "관리자 모드 - CCTV 자산 등록 및 관리" },
+            { src: "images/watchout_구역_CRUD.gif", caption: "관리자 모드 - 위험 구역 설정 및 관리" },
+            { src: "images/watchout_모바일.png", caption: "모바일 앱 (회원가입, 안면 등록, 현장 관리)" },
+            { src: "images/watchout_워치화면.png", caption: "WearOS 워치 앱 (낙상 감지, 심박수, SOS 호출)" }
+        ],
+
+        githubLink: "https://github.com/WatchOut-Construct",
         demoLink: "#",
-        colSpan: "lg:col-span-2", // Default span
+        colSpan: "lg:col-span-2",
 
         // Detailed Info
         period: "2024.08 - 2024.10 (7주)",
-        role: "Core System Architect & Full-Cycle Developer",
-        summary: "단순한 관제 시스템을 넘어, <strong class='text-[#333] bg-[#fff3cd]'>'0.1초의 오차도 허용하지 않는 신뢰성'</strong>에 집중했습니다. Vision AI의 오인식 문제를 독자적인 알고리즘으로 해결하고, Kafka 파이프라인을 통해 이기종 센서 데이터를 0.5초 이내에 동기화하여 현장의 안전 골든타임을 확보했습니다.",
+        role: "Core System Architect (백엔드/인프라 총괄)",
+        summary: "현장의 안전은 '속도'와 '정확성'에 달려있습니다. Vision AI의 오인식 문제를 해결하기 위해 <strong class='text-[#333] bg-[#fff3cd]'>'Gap Check' 검증 로직</strong>을 독자 개발하여 보안 오탐을 원천 차단했습니다. 또한, AI 추론 서버와 백엔드 간의 트래픽 스파이크를 해소하기 위해 **Kafka 기반의 EDA(Event-Driven Architecture)**를 구축했습니다.",
         contributions: [
-            "속도와 정확도를 잡는 하이브리드 AI 파이프라인: 얼굴 감지는 고속 Caffe SSD로, 식별은 고정밀 ArcFace(ResNet-100)로 이원화 설계하여 실시간성(Latency ≤ 0.5s)과 식별 정확도를 동시에 확보",
-            "보안 오탐(False Positive) 차단을 위한 'Gap Check' 알고리즘 개발: 단순 코사인 유사도 임계값의 한계를 극복하기 위해 Top-K(5명) 후보군을 분석하고, 1·2순위 간 거리 차(Gap ≥ 0.1)가 명확할 때만 인증하는 독자 검증 로직 구현",
-            "Wear OS 네이티브 낙상 감지 및 생존성 확보: 화면 꺼짐(Doze Mode) 상태에서도 센서가 동작하도록 Health Services API와 PassiveListenerService를 활용해 백그라운드 프로세스 생존성을 보장하는 낙상 감지 모듈 개발",
-            "Device-to-Server 실시간 데이터 파이프라인 구축: 워치의 센서 이벤트를 'Wearable Data Layer → 모바일 앱 → Kafka → 백엔드'로 유실 없이 전달하는 이벤트 기반 아키텍처(EDA) 설계 및 구현",
-            "임베딩 Hot-Reloading 시스템: 운영 중단 없이 신규 작업자를 반영하기 위해, PostgreSQL의 임베딩 데이터를 주기적으로 Fetch하여 메모리 캐시를 갱신하는 무중단 동기화 메커니즘 적용"
+            "Hybrid AI Pipeline 설계: 고속 탐지(Caffe SSD)와 정밀 식별(ArcFace) 프로세스를 이원화하여 Latency 0.5s 미만과 식별 정확도 99% 동시 달성",
+            "Vector Gap Check 알고리즘: Top-K 후보군의 코사인 유사도 격차(Margin)를 분석하는 2차 검증 로직을 도입하여 False Positive(오인식) 0건 달성",
+            "Kafka 파티셔닝 전략: 구역(Zone) ID를 파티션 키로 사용하여 데이터 순서 보장(Ordering) 및 처리 효율 극대화",
+            "Wear OS 백그라운드 생존성: 안드로이드 Doze 모드에서도 센서가 동작하도록 Foreground Service와 WakeLock을 결합한 데몬 구현",
+            "Redis Look-aside 캐싱: 작업자 정보 조회 시 발생하는 RDB 부하를 80% 감소시키고 임베딩 벡터 Hot-Reloading 구현"
         ],
         metrics: [
-            {
-                label: "보안 오탐(False Positive)",
-                value: "0건",
-                visual: 100,
-                change: "Gap Check 도입 전 대비 100% 개선"
-            },
-            {
-                label: "이벤트 처리 지연",
-                value: "0.5s 미만",
-                visual: 95,
-                change: "Kafka 비동기 파이프라인 최적화"
-            },
-            {
-                label: "임베딩 갱신 다운타임",
-                value: "0초",
-                visual: 100,
-                change: "Hot-Reloading 아키텍처 적용"
-            }
+            { label: "보안 오탐률 (FP)", value: "0%", visual: 100, change: "Gap Check 적용 후 오인식 완전 제거" },
+            { label: "E2E 지연시간", value: "450ms", visual: 95, change: "Kafka 도입으로 API 병목 해소" },
+            { label: "시스템 가용성", value: "99.9%", visual: 99, change: "서비스 디스커버리 및 헬스 체크 적용" }
         ],
         techDecisions: [
-            {
-                stack: "Apache Kafka (Backend)",
-                reason: "AI 추론 서버에서 발생하는 간헐적인 트래픽 스파이크가 메인 백엔드 서버(Spring Boot)의 성능을 저하시키지 않도록, 결합도를 낮추고 이벤트를 비동기로 완충(Buffering)하기 위해 도입했습니다."
-            },
-            {
-                stack: "ArcFace (AI)",
-                reason: "초기 MobileFaceNet 도입 시 유사 인물 오인식 문제가 발생했습니다. 안전 도메인에서는 '속도'보다 '신뢰성'이 최우선이라 판단하여, 연산 비용이 크더라도 정확도가 압도적인 ResNet-100 기반 ArcFace로 교체하는 Trade-off를 결정했습니다."
-            },
-            {
-                stack: "Wear OS Native (Mobile)",
-                reason: "현장 작업자의 격렬한 움직임과 장시간 사용 환경에서도 OS에 의해 센서 프로세스가 종료(Kill)되지 않아야 했습니다. 크로스 플랫폼 대신 안드로이드 네이티브의 'PassiveListenerService'를 사용하여 앱 생존성과 배터리 효율을 극대화했습니다."
-            }
+            { stack: "Apache Kafka", reason: "AI 서버의 간헐적 지연이 전체 장애로 전파되는 것을 막고(Decoupling), 트래픽 폭주 시 데이터 유실 없이 버퍼링하기 위해 도입했습니다." },
+            { stack: "ArcFace (ResNet-100)", reason: "MobileFaceNet은 가볍지만 측면 얼굴 인식률이 낮아, 안전 관제에 필수적인 '높은 재현율(Recall)'을 위해 연산 비용이 들더라도 정확도가 높은 모델을 선택했습니다." },
+            { stack: "Redis & PostgreSQL", reason: "벡터 데이터의 영구 저장은 pgvector를 사용하되, 실시간 추론을 위한 빈번한 조회는 Redis In-memory로 처리하여 I/O를 최소화했습니다." }
         ],
         troubleshooting: {
-            title: "코사인 유사도 임계값의 한계와 'Gap Check' 알고리즘",
-            situation: "등록된 작업자가 늘어날수록, 얼굴 특징이 미세하게 비슷한 타인을 본인으로 잘못 인식하는 False Positive(보안 오탐) 사례가 간헐적으로 발생했습니다.",
+            title: "유사 인물 오인식 문제와 'Gap Check' 알고리즘",
+            situation: "유사도 임계값(0.5)만으로는 인상이 비슷한 작업자를 구분하지 못해 보안 오탐(False Positive) 발생.",
             actions: [
-                {
-                    title: "Attempt 1 (단일 임계값)",
-                    result: "단순히 '유사도 ≥ 0.5'이면 통과시키는 로직 사용. → 타인(0.51)과 본인(0.52)의 미세한 차이를 구분하지 못함."
-                },
-                {
-                    title: "Solution (이중 검증 로직 설계)",
-                    result: "가장 유사한 상위 5명(Top-K)을 추출한 뒤, 1순위와 2순위 후보 간의 유사도 격차(Gap)를 확인하는 로직을 추가했습니다."
-                }
+                { title: "문제 분석", result: "유사도가 0.51(타인)과 0.52(본인)로 근소한 차이가 날 때 구분 불가 확인." },
+                { title: "해결책 (Gap Check)", result: "1순위와 2순위 후보의 유사도 차이(Gap)가 0.1 이상일 때만 인증하는 로직을 추가하여 오인식 원천 차단." }
             ],
             codeSnippet: `
-# 1순위와 2순위의 유사도 차이(gap)가 0.1 이상일 때만 인증
-top_k_candidates = find_top_k_matches(embedding, k=5)
-best_match = top_k_candidates[0]
-second_match = top_k_candidates[1]
+# Gap Check Logic (Python Pseudo-code)
+matches = find_top_k_matches(embedding, k=2)
+best, second = matches[0], matches[1]
 
-gap = best_match.distance - second_match.distance
+if best.score < THRESHOLD: return User.UNKNOWN
 
-if best_match.distance < THRESHOLD and gap > 0.1:
-    return authorize(best_match.user_id)
-else:
-    # 애매한 경우 'Unknown' 처리하여 오인식 원천 차단
-    return None
-`
+# 핵심 로직: 1등과 2등의 점수 차이가 미미하면 거부
+gap = best.score - second.score
+if gap < 0.1:
+    return User.UNKNOWN
+
+return authorize(best.user_id)`
         }
     },
     // 2. 예나, 지금 (Yena, Now) - [신규 추가 / 더미 데이터]
     {
         title: "예나, 지금 (Yena, Now)",
         description: "멀리 있어도, 함께 추억을 남길 수 있는 온라인 포토부스 서비스",
-        tags: ["Spring Boot", "React", "WebRTC", "OpenVidu", "MySQL"], // TODO: 실제 스택으로 수정
+        tags: ["Spring Boot", "React", "WebRTC", "OpenVidu", "MySQL"],
         image: "images/yena_cover.png",
         architectureImage: "images/yena_arch.png",
+
+        // ★ [Carousel Data]
+        serviceImages: [
+            { src: "images/yena_cover.png", caption: "예나, 지금 서비스 메인 표지" },
+            { src: "images/yena_프로필.png", caption: "사용자 프로필 & 마이페이지" },
+            { src: "images/yena_방생성.gif", caption: "포토부스 방 생성 및 설정" },
+            { src: "images/yena_방입장.gif", caption: "친구 초대 & 방 입장" },
+            { src: "images/yena_N컷촬영.gif", caption: "실시간 N컷 촬영 (WebRTC)" },
+            { src: "images/yena_촬영편집.gif", caption: "사진 편집 & 프레임 꾸미기" },
+            { src: "images/yena_갤러리.png", caption: "내 사진 갤러리 모아보기" },
+            { src: "images/yena_갤러리상세.png", caption: "갤러리 상세보기 & 공유" }
+        ],
+
         githubLink: "#",
         demoLink: "#",
         colSpan: "lg:col-span-1",
@@ -120,7 +115,20 @@ else:
         tags: ["LangGraph", "FastAPI", "Spring Boot", "Redis", "MySQL", "Prompt Engineering"],
         image: "images/coditor_cover.png",
         architectureImage: "images/coditor_arch.png",
-        githubLink: "https://github.com/Leehwa531/Coditor", // [반영 완료] 실제 링크 연결
+
+        // ★ [Carousel Data]
+        serviceImages: [
+            { src: "images/coditor_cover.png", caption: "Coditor 서비스 메인 표지" },
+            { src: "images/coditor_랜딩페이지.png", caption: "서비스 랜딩 페이지 (GitHub 연동 시작)" },
+            { src: "images/coditor_메인페이지.png", caption: "메인 가이드 및 3단계 프로세스 소개" },
+            { src: "images/coditor_챗봇.png", caption: "AI 멘토링 & 프로젝트 아이데이션 채팅" },
+            { src: "images/coditor_langgraph.png", caption: "LangGraph 기반 AI 답변 생성 파이프라인" },
+            { src: "images/coditor_대시보드.png", caption: "개발자 성장 분석 대시보드 (역량 차트)" },
+            { src: "images/coditor_프로젝트아카이브.png", caption: "내 프로젝트 모아보기 (아카이빙)" },
+            { src: "images/coditor_태그기반아카이브.png", caption: "기술 스택/태그별 프로젝트 필터링" }
+        ],
+
+        githubLink: "https://github.com/Leehwa531/Coditor",
         demoLink: "#",
         colSpan: "lg:col-span-2",
 
@@ -204,98 +212,60 @@ List<TagInfo> details = redis.executePipelined(connection -> {
 const skillCategories = [
     {
         id: 'backend',
-        title: '메인 요리 (Backend)',
-        description: '깊은 맛이 우러나는 핵심 비법',
-        icon: 'server', // Lucide icon name
+        title: 'Backend Engineering',
+        description: '안정적이고 확장 가능한 서버 아키텍처',
+        icon: 'server', // Lucide 아이콘 이름
         skills: [
             {
                 name: 'Java 17',
-                level: '장인 (Advanced)',
+                level: 'Advanced',
                 percentage: 90,
-                keywords: ['Stream API', 'Lambda', 'OOP'],
-                desc: '객체지향의 원칙(SOLID)을 칼질하듯 정교하게 지키며, Java 17의 신선한 문법(Record, Switch Expression)을 활용해 담백한 코드를 요리합니다.',
-                context: 'SSAFY 공통 프로젝트 핵심 로직 구현',
+                desc: 'Modern Java 문법 활용 및 멀티스레딩 제어 가능',
                 img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg'
             },
             {
                 name: 'Spring Boot',
-                level: '장인 (Advanced)',
+                level: 'Advanced',
                 percentage: 85,
-                keywords: ['Security', 'JPA', 'AOP'],
-                desc: 'Spring Security라는 강력한 보존료로 보안을 책임지며, AOP를 통해 로깅과 예외처리를 깔끔하게 분리해냈습니다.',
-                context: '관통 프로젝트 인증/인가 서버 구축',
+                desc: 'DI/IoC 이해, Security 기반 인증/인가 구축',
                 img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg'
             },
             {
                 name: 'JPA / QueryDSL',
-                level: '숙련 (Intermediate)',
+                level: 'Intermediate',
                 percentage: 78,
-                keywords: ['N+1 해결', 'Fetch Join', '동적 쿼리'],
-                desc: '복잡한 데이터 조회도 QueryDSL 레시피로 깔끔하게 처리합니다. N+1 문제는 Fetch Join으로 시원하게 뚫어버립니다.',
-                context: '커뮤니티 검색 기능 최적화',
+                desc: '복잡한 동적 쿼리 작성 및 성능 최적화 (N+1 해결)',
                 img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/hibernate/hibernate-original.svg'
             },
             {
                 name: 'MySQL',
-                level: '숙련 (Intermediate)',
+                level: 'Intermediate',
                 percentage: 75,
-                keywords: ['인덱싱', '정규화', '실행계획'],
-                desc: '대용량 주문(트래픽)이 들어와도 당황하지 않도록 인덱싱과 실행 계획 분석으로 DB 성능을 최적의 상태로 유지합니다.',
-                context: '데이터베이스 설계 및 튜닝',
+                desc: '실행 계획 분석 및 인덱스 튜닝 경험',
                 img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'
-            },
+            }
         ]
     },
     {
         id: 'devops',
-        title: '주방 설비 (DevOps)',
-        description: '효율적인 서빙 시스템 구축',
-        icon: 'terminal',
+        title: 'DevOps & Infra',
+        description: '자동화된 배포 및 클라우드 환경',
+        icon: 'cloud',
         skills: [
             {
                 name: 'AWS',
-                level: '숙련 (Intermediate)',
+                level: 'Intermediate',
                 percentage: 70,
-                keywords: ['EC2', 'RDS', 'S3'],
-                desc: '어디서든 맛볼 수 있도록 EC2에 가게를 차리고, Route53으로 간판을 달았습니다. HTTPS 보안 인증서도 갖췄습니다.',
-                context: '배포 파이프라인 구축',
+                desc: 'EC2, S3, RDS 등 클라우드 인프라 구축 경험',
                 img: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg'
             },
             {
                 name: 'Docker',
-                level: '기본 (Basic)',
+                level: 'Basic',
                 percentage: 50,
-                keywords: ['Compose', 'Container'],
-                desc: '주방 환경을 컨테이너에 담아 어디서든 똑같은 맛을 낼 수 있도록 도커를 활용합니다.',
-                context: '개발 환경 통일화',
+                desc: 'Docker Compose를 활용한 개발 환경 컨테이너화',
                 img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'
-            },
-            {
-                name: 'Git / GitHub',
-                level: '장인 (Advanced)',
-                percentage: 85,
-                keywords: ['Git Flow', '협업', 'PR'],
-                desc: 'Git Flow라는 레시피북을 통해 팀원들과 레시피가 섞이지 않도록 관리합니다. 코드 리뷰로 맛을 검증합니다.',
-                context: '팀 프로젝트 형상 관리',
-                img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'
-            },
-        ]
-    },
-    {
-        id: 'frontend',
-        title: '플레이팅 (Frontend)',
-        description: '보기 좋은 떡이 먹기도 좋다',
-        icon: 'layout',
-        skills: [
-            {
-                name: 'Vue.js',
-                level: '기본 (Basic)',
-                percentage: 40,
-                keywords: ['Lifecycle', 'Axios', 'Pinia'],
-                desc: '백엔드 요리가 손님에게 잘 전달되도록 기본적인 화면 구성을 할 수 있습니다. 비동기 통신(Axios)으로 주문을 처리합니다.',
-                context: 'Admin 페이지 구현',
-                img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg'
-            },
+            }
         ]
     }
 ];
@@ -996,6 +966,61 @@ const projectDetailsMock = {
     }
 };
 
+// ★ [Carousel Logic]
+let currentCarouselIndex = 0;
+let currentProjectImages = [];
+
+function updateCarouselView() {
+    const mainImg = document.getElementById('carousel-main-img');
+    const caption = document.getElementById('carousel-caption');
+    const thumbnails = document.querySelectorAll('.carousel-thumb');
+
+    if (!mainImg || currentProjectImages.length === 0) return;
+
+    const currentImgData = currentProjectImages[currentCarouselIndex];
+
+    // Fade effect logic
+    mainImg.style.opacity = '0.5';
+    setTimeout(() => {
+        mainImg.src = currentImgData.src;
+        mainImg.alt = currentImgData.caption;
+        mainImg.style.opacity = '1';
+    }, 150);
+
+    // Caption Update
+    if (caption) {
+        caption.textContent = currentImgData.caption || "";
+    }
+
+    // Thumbnails Update
+    thumbnails.forEach((thumb, idx) => {
+        if (idx === currentCarouselIndex) {
+            thumb.classList.add('border-stamp-red', 'opacity-100', 'ring-2', 'ring-stamp-red');
+            thumb.classList.remove('border-transparent', 'opacity-60');
+            // Scroll thumbnail into view if needed
+            thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } else {
+            thumb.classList.remove('border-stamp-red', 'opacity-100', 'ring-2', 'ring-stamp-red');
+            thumb.classList.add('border-transparent', 'opacity-60');
+        }
+    });
+}
+
+function moveCarousel(step) {
+    if (currentProjectImages.length === 0) return;
+    currentCarouselIndex = (currentCarouselIndex + step + currentProjectImages.length) % currentProjectImages.length;
+    updateCarouselView();
+}
+
+function setCarousel(index) {
+    currentCarouselIndex = index;
+    updateCarouselView();
+}
+
+// Assign to window for inline onclicks
+window.moveCarousel = moveCarousel;
+window.setCarousel = setCarousel;
+
 function openProjectModal(project) {
     const modalRoot = document.getElementById('modal-root');
 
@@ -1006,6 +1031,59 @@ function openProjectModal(project) {
 
     // Use project data directly. 
     const detailData = project;
+
+    // ★ [Carousel Init]
+    currentCarouselIndex = 0;
+    currentProjectImages = project.serviceImages || [];
+
+    // Fallback if no specific images are defined
+    if (currentProjectImages.length === 0) {
+        currentProjectImages = [
+            { src: project.image, caption: "메인 이미지" },
+            { src: project.architectureImage, caption: "시스템 아키텍처" }
+        ].filter(item => item.src);
+    }
+
+    //★ [Carousel HTML Generation]
+    let carouselHTML = '';
+    if (currentProjectImages.length > 0) {
+        carouselHTML = `
+        <div class="mb-8 select-none">
+            <!-- 1. Main Slider Area (Style A) -->
+            <div class="relative w-full aspect-video bg-gray-900 rounded-lg overflow-hidden group shadow-lg mb-3 border border-gray-200">
+                <img id="carousel-main-img" 
+                     src="${currentProjectImages[0].src}" 
+                     alt="${currentProjectImages[0].caption}" 
+                     class="w-full h-full object-contain transition-opacity duration-300">
+                
+                <!-- Caption Overlay -->
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-4 pt-10 pointer-events-none">
+                    <p id="carousel-caption" class="text-white text-center font-sans text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        ${currentProjectImages[0].caption}
+                    </p>
+                </div>
+
+                <!-- Controls -->
+                <button onclick="window.moveCarousel(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/40 hover:bg-stamp-red text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 transform hover:scale-110 z-10">
+                    <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                </button>
+                <button onclick="window.moveCarousel(1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/40 hover:bg-stamp-red text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 transform hover:scale-110 z-10">
+                    <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- 2. Thumbnails Area (Style B) -->
+            <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar px-1">
+                ${currentProjectImages.map((img, idx) => `
+                    <button onclick="window.setCarousel(${idx})" 
+                            class="carousel-thumb relative flex-shrink-0 w-20 h-14 rounded-md overflow-hidden border-2 transition-all duration-200 cursor-pointer ${idx === 0 ? 'border-stamp-red opacity-100 ring-2 ring-stamp-red' : 'border-transparent opacity-60 hover:opacity-100'}">
+                        <img src="${img.src}" class="w-full h-full object-cover">
+                    </button>
+                `).join('')}
+            </div>
+        </div>
+        `;
+    }
 
     const modalHTML = `
     <div class="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm overflow-y-auto animate-fade-in">
@@ -1037,7 +1115,7 @@ function openProjectModal(project) {
 
                 <!-- Navigation Links (Anchor) -->
                 <div class="space-y-1">
-                  ${['Overview', 'Tech Decisions', 'Troubleshooting', 'Architecture'].map((section, idx) => `
+                  ${['Architecture', 'Overview', 'Tech Decisions', 'Troubleshooting'].map((section, idx) => `
                     <a href="#section-${idx}" class="block text-xs font-bold text-[#555] hover:text-[#cc3333] hover:bg-[#eee] px-2 py-1.5 rounded transition-colors flex justify-between items-center group">
                       ${section} <i data-lucide="chevron-right" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </a>
@@ -1075,6 +1153,28 @@ function openProjectModal(project) {
               <!-- --- Main Content (Right Panel) --- -->
               <div class="w-full md:w-[72%] bg-white p-8 md:p-12 space-y-12">
                 
+                <!-- ★ CAROUSEL INSERTED HERE -->
+                ${carouselHTML}
+
+                <!-- 1. Architecture -->
+                <div id="section-0">
+                  <h2 class="text-xl font-bold mb-4 font-dohyeon flex items-center gap-2 text-[#333] border-b pb-2">
+                    <span class="text-[#cc3333]">#</span> 시스템 아키텍처
+                  </h2>
+                  <div class="w-full bg-[#f8f9fa] border border-[#eee] rounded-xl flex items-center justify-center relative group overflow-hidden">
+                    
+                    ${detailData.architectureImage ? `
+                        <img src="${detailData.architectureImage}" alt="System Architecture" class="w-full h-auto object-contain max-h-[500px] hover:scale-105 transition-transform duration-500 cursor-zoom-in" onclick="window.open(this.src, '_blank')">
+                    ` : `
+                        <div class="text-center py-12">
+                            <i data-lucide="layers" class="w-12 h-12 text-[#ddd] mx-auto mb-2"></i>
+                            <p class="text-xs text-[#999] font-bold">Architecture Diagram Placeholder</p>
+                        </div>
+                    `}
+                    
+                  </div>
+                </div>
+
                 <!-- Engineer's Note -->
                 <div class="bg-[#f8f9fa] border-l-4 border-[#333] p-5 rounded-r-xl">
                   <h3 class="font-bold text-[#333] mb-2 flex items-center gap-2"><i data-lucide="quote" class="w-4 h-4"></i> Engineer's Note</h3>
@@ -1083,8 +1183,8 @@ function openProjectModal(project) {
                   </p>
                 </div>
 
-                <!-- 1. Overview -->
-                <div id="section-0">
+                <!-- 2. Overview -->
+                <div id="section-1">
                   <h2 class="text-xl font-bold mb-4 font-dohyeon flex items-center gap-2 text-[#333] border-b pb-2">
                     <span class="text-[#cc3333]">#</span> 프로젝트 개요
                   </h2>
@@ -1101,8 +1201,8 @@ function openProjectModal(project) {
                   </div>
                 </div>
 
-                <!-- 2. Technical Decisions (Grid) -->
-                <div id="section-1">
+                <!-- 3. Technical Decisions (Grid) -->
+                <div id="section-2">
                   <h2 class="text-xl font-bold mb-4 font-dohyeon flex items-center gap-2 text-[#333] border-b pb-2">
                     <span class="text-[#cc3333]">#</span> 기술적 의사결정 (Why?)
                   </h2>
@@ -1118,8 +1218,8 @@ function openProjectModal(project) {
                   </div>
                 </div>
 
-                <!-- 3. Troubleshooting (Detailed) -->
-                <div id="section-2">
+                <!-- 4. Troubleshooting (Detailed) -->
+                <div id="section-3">
                   <h2 class="text-xl font-bold mb-4 font-dohyeon flex items-center gap-2 text-[#333] border-b pb-2">
                     <span class="text-[#cc3333]">#</span> 트러블 슈팅 로그
                   </h2>
@@ -1172,25 +1272,6 @@ function openProjectModal(project) {
                   ` : ''}
                 </div>
 
-                <!-- 4. Architecture -->
-                <div id="section-3">
-                  <h2 class="text-xl font-bold mb-4 font-dohyeon flex items-center gap-2 text-[#333] border-b pb-2">
-                    <span class="text-[#cc3333]">#</span> 시스템 아키텍처
-                  </h2>
-                  <div class="w-full bg-[#f8f9fa] border border-[#eee] rounded-xl flex items-center justify-center relative group overflow-hidden">
-                    
-                    ${detailData.architectureImage ? `
-                        <img src="${detailData.architectureImage}" alt="System Architecture" class="w-full h-auto object-contain max-h-[500px] hover:scale-105 transition-transform duration-500 cursor-zoom-in" onclick="window.open(this.src, '_blank')">
-                    ` : `
-                        <div class="text-center py-12">
-                            <i data-lucide="layers" class="w-12 h-12 text-[#ddd] mx-auto mb-2"></i>
-                            <p class="text-xs text-[#999] font-bold">Architecture Diagram Placeholder</p>
-                        </div>
-                    `}
-                    
-                  </div>
-                </div>
-
               </div>
             </div>
           </div>
@@ -1220,3 +1301,76 @@ function closeProjectModal() {
     modalRoot.classList.add('hidden');
     document.body.style.overflow = '';
 }
+
+// 렌더링 함수 (renderTechStack)
+function renderTechStack() {
+    const container = document.getElementById('tech-stack');
+    if (!container) return;
+
+    // HTML 주입
+    let html = `
+        <div class="max-w-5xl mx-auto px-4">
+            <!-- 섹션 헤더 -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-dohyeon mb-4 relative inline-block">
+                    <span class="relative z-10">엄선된 기술 스택</span>
+                    <!-- 밑줄 효과 -->
+                    <div class="absolute bottom-1 left-0 w-full h-3 bg-stamp-red/20 -rotate-1"></div>
+                </h2>
+                <p class="text-xl text-ink-black/70 font-jua mt-2">사용 가능한 재료와 숙련도입니다.</p>
+            </div>
+            
+            <!-- 기술 카드 그리드 -->
+            <div class="grid md:grid-cols-2 gap-8">
+    `;
+
+    skillCategories.forEach(cat => {
+        html += `
+            <div class="bg-white border-4 border-ink-black p-6 rounded-lg shadow-[8px_8px_0px_0px_rgba(51,51,51,0.1)] hover:shadow-[12px_12px_0px_0px_rgba(204,51,51,0.2)] transition-shadow duration-300">
+                <!-- 카테고리 헤더 -->
+                <div class="flex items-center gap-3 mb-6 border-b-2 border-ink-black/10 pb-4">
+                    <div class="p-3 bg-ink-black text-white rounded-lg">
+                        <i data-lucide="${cat.icon}" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-dohyeon">${cat.title}</h3>
+                        <p class="text-sm text-ink-black/60 font-sans">${cat.description}</p>
+                    </div>
+                </div>
+                
+                <!-- 스킬 리스트 -->
+                <div class="space-y-6">
+        `;
+
+        cat.skills.forEach(skill => {
+            html += `
+                <div class="group">
+                    <div class="flex justify-between items-end mb-1">
+                        <span class="font-bold font-sans flex items-center gap-2">
+                            <img src="${skill.img}" class="w-5 h-5"> ${skill.name}
+                        </span>
+                        <span class="font-dohyeon text-stamp-red">${skill.percentage}%</span>
+                    </div>
+                    <!-- 게이지 바 -->
+                    <div class="h-4 bg-paper-bg border-2 border-ink-black rounded-full overflow-hidden relative">
+                        <div class="h-full bg-ink-black group-hover:bg-stamp-red transition-all duration-1000 ease-out" style="width: ${skill.percentage}%"></div>
+                    </div>
+                    <p class="text-xs text-ink-black/60 mt-1 font-sans">${skill.desc}</p>
+                </div>
+            `;
+        });
+
+        html += `</div></div>`;
+    });
+
+    html += `</div></div>`;
+    container.innerHTML = html;
+
+    // 아이콘 새로고침 (Lucide)
+    if (window.lucide) lucide.createIcons();
+}
+
+// 초기화 시 렌더링 호출
+document.addEventListener('DOMContentLoaded', () => {
+    renderTechStack();
+});
