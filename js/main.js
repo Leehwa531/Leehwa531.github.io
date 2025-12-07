@@ -212,59 +212,102 @@ List<TagInfo> details = redis.executePipelined(connection -> {
 const skillCategories = [
     {
         id: 'backend',
-        title: 'Backend Engineering',
-        description: '안정적이고 확장 가능한 서버 아키텍처',
-        icon: 'server', // Lucide 아이콘 이름
+        title: 'Core Backend & Language',
+        description: '견고한 비즈니스 로직 설계 및 성능 최적화',
+        icon: 'server',
         skills: [
             {
                 name: 'Java 17',
                 level: 'Advanced',
                 percentage: 90,
-                desc: 'Modern Java 문법 활용 및 멀티스레딩 제어 가능',
+                desc: 'Stream API와 Lambda를 활용한 함수형 프로그래밍 및 멀티스레드 환경의 동시성 제어',
                 img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg'
             },
             {
-                name: 'Spring Boot',
+                name: 'Spring Boot 3.x',
                 level: 'Advanced',
                 percentage: 85,
-                desc: 'DI/IoC 이해, Security 기반 인증/인가 구축',
+                desc: 'PSA/IoC/AOP 원리 이해 기반의 아키텍처 설계 및 Spring Security 인증/인가 고도화',
                 img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg'
             },
             {
                 name: 'JPA / QueryDSL',
                 level: 'Intermediate',
-                percentage: 78,
-                desc: '복잡한 동적 쿼리 작성 및 성능 최적화 (N+1 해결)',
+                percentage: 80,
+                desc: '영속성 컨텍스트 이해 및 동적 쿼리 작성, Fetch Join을 활용한 N+1 문제 해결',
                 img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/hibernate/hibernate-original.svg'
             },
             {
-                name: 'MySQL',
-                level: 'Intermediate',
-                percentage: 75,
-                desc: '실행 계획 분석 및 인덱스 튜닝 경험',
-                img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'
+                name: 'Kotlin',
+                level: 'Basic',
+                percentage: 40,
+                desc: 'Java와의 상호운용성을 이해하고, 간결한 문법을 활용한 서버 사이드 개발 경험',
+                img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg'
             }
         ]
     },
     {
-        id: 'devops',
-        title: 'DevOps & Infra',
-        description: '자동화된 배포 및 클라우드 환경',
-        icon: 'cloud',
+        id: 'infra-data',
+        title: 'Architecture & Data',
+        description: '대용량 데이터 처리 및 자동화된 배포 환경',
+        icon: 'database',
         skills: [
             {
-                name: 'AWS',
+                name: 'MySQL / PostgreSQL',
+                level: 'Intermediate',
+                percentage: 75,
+                desc: '실행 계획(Explain) 분석을 통한 인덱스 튜닝 및 정규화/반정규화 설계',
+                img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'
+            },
+            {
+                name: 'Redis',
                 level: 'Intermediate',
                 percentage: 70,
-                desc: 'EC2, S3, RDS 등 클라우드 인프라 구축 경험',
+                desc: 'Look-aside 캐싱 전략 및 분산 락(Distributed Lock)을 활용한 동시성 이슈 제어',
+                img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg'
+            },
+            {
+                name: 'AWS / Docker',
+                level: 'Intermediate',
+                percentage: 65,
+                desc: 'EC2, RDS 기반 인프라 구축 및 Docker Compose를 활용한 개발 환경 컨테이너화',
                 img: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg'
             },
             {
-                name: 'Docker',
+                name: 'CI/CD (Jenkins/Github)',
+                level: 'Basic',
+                percentage: 60,
+                desc: 'Webhook 트리거 기반의 빌드/배포 자동화 파이프라인 구축 경험',
+                img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg'
+            }
+        ]
+    },
+    {
+        id: 'ai-tools',
+        title: 'AI Engineering & Tools',
+        description: 'AI 모델 서빙 및 효율적인 협업 프로세스',
+        icon: 'cpu',
+        skills: [
+            {
+                name: 'Python / PyTorch',
+                level: 'Intermediate',
+                percentage: 70,
+                desc: '데이터 전처리 및 딥러닝 모델 학습, FastAPI를 활용한 모델 서빙 서버 구축',
+                img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'
+            },
+            {
+                name: 'LangChain',
                 level: 'Basic',
                 percentage: 50,
-                desc: 'Docker Compose를 활용한 개발 환경 컨테이너화',
-                img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'
+                desc: 'LLM 기반 애플리케이션 개발 및 RAG(검색 증강 생성) 파이프라인 구성 경험',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg'
+            },
+            {
+                name: 'Git / Collaboration',
+                level: 'Advanced',
+                percentage: 85,
+                desc: 'Git Flow 전략 준수, Jira/Notion을 활용한 애자일(Agile) 스프린트 운영',
+                img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'
             }
         ]
     }
@@ -1344,7 +1387,7 @@ function renderTechStack() {
 
     // HTML 주입
     let html = `
-        <div class="max-w-5xl mx-auto px-4">
+        <div class="max-w-6xl mx-auto px-4">
             <!-- 섹션 헤더 -->
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-dohyeon mb-4 relative inline-block">
@@ -1352,24 +1395,24 @@ function renderTechStack() {
                     <!-- 밑줄 효과 -->
                     <div class="absolute bottom-1 left-0 w-full h-3 bg-stamp-red/20 -rotate-1"></div>
                 </h2>
-                <p class="text-xl text-ink-black/70 font-jua mt-2">안정적인 서비스 운영을 위해 깊이 있게 학습한 기술 스택입니다.</p>
+                <p class="text-xl text-ink-black/70 font-jua mt-2">안정적인 서비스 운영과 AI 융합을 위해 깊이 있게 학습했습니다.</p>
             </div>
             
-            <!-- 기술 카드 그리드 -->
-            <div class="grid md:grid-cols-2 gap-8">
+            <!-- 기술 카드 그리드 (3열 레이아웃 적용) -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
     `;
 
     skillCategories.forEach(cat => {
         html += `
-            <div class="bg-white border-4 border-ink-black p-6 rounded-lg shadow-[8px_8px_0px_0px_rgba(51,51,51,0.1)] hover:shadow-[12px_12px_0px_0px_rgba(204,51,51,0.2)] transition-shadow duration-300">
+            <div class="bg-white border-2 border-ink-black p-6 rounded-xl shadow-[6px_6px_0px_0px_rgba(51,51,51,0.1)] hover:shadow-[8px_8px_0px_0px_rgba(204,51,51,0.2)] transition-all duration-300 hover:-translate-y-1">
                 <!-- 카테고리 헤더 -->
                 <div class="flex items-center gap-3 mb-6 border-b-2 border-ink-black/10 pb-4">
-                    <div class="p-3 bg-ink-black text-white rounded-lg">
-                        <i data-lucide="${cat.icon}" class="w-6 h-6"></i>
+                    <div class="p-2.5 bg-ink-black text-white rounded-lg">
+                        <i data-lucide="${cat.icon}" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-dohyeon">${cat.title}</h3>
-                        <p class="text-sm text-ink-black/60 font-sans">${cat.description}</p>
+                        <h3 class="text-xl font-dohyeon tracking-wide">${cat.title}</h3>
+                        <p class="text-xs text-ink-black/60 font-sans font-bold">${cat.description}</p>
                     </div>
                 </div>
                 
@@ -1378,19 +1421,24 @@ function renderTechStack() {
         `;
 
         cat.skills.forEach(skill => {
+            // 퍼센트에 따른 색상 로직
+            const barColor = skill.percentage >= 80 ? 'bg-stamp-red' : 'bg-ink-black';
+
             html += `
                 <div class="group">
-                    <div class="flex justify-between items-end mb-1">
-                        <span class="font-bold font-sans flex items-center gap-2">
-                            <img src="${skill.img}" class="w-5 h-5"> ${skill.name}
+                    <div class="flex justify-between items-center mb-1.5">
+                        <span class="font-bold font-sans flex items-center gap-2 text-sm text-ink-black">
+                            <img src="${skill.img}" class="w-4 h-4 object-contain"> ${skill.name}
                         </span>
-                        <span class="font-dohyeon text-stamp-red">${skill.percentage}%</span>
+                        <span class="font-dohyeon text-xs text-gray-400 group-hover:text-stamp-red transition-colors">${skill.percentage}%</span>
                     </div>
                     <!-- 게이지 바 -->
-                    <div class="h-4 bg-paper-bg border-2 border-ink-black rounded-full overflow-hidden relative">
-                        <div class="h-full bg-ink-black group-hover:bg-stamp-red transition-all duration-1000 ease-out" style="width: ${skill.percentage}%"></div>
+                    <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden relative">
+                        <div class="h-full ${barColor} group-hover:bg-stamp-red transition-all duration-1000 ease-out" style="width: ${skill.percentage}%"></div>
                     </div>
-                    <p class="text-xs text-ink-black/60 mt-1 font-sans">${skill.desc}</p>
+                    <p class="text-[11px] text-gray-500 mt-1.5 font-sans leading-relaxed break-keep group-hover:text-ink-black transition-colors">
+                        ${skill.desc}
+                    </p>
                 </div>
             `;
         });
@@ -1401,7 +1449,7 @@ function renderTechStack() {
     html += `</div></div>`;
     container.innerHTML = html;
 
-    // 아이콘 새로고침 (Lucide)
+    // 아이콘 새로고침
     if (window.lucide) lucide.createIcons();
 }
 
