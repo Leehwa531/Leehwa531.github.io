@@ -224,7 +224,7 @@ const skillCategories = [
                 img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg'
             },
             {
-                name: 'Spring Boot 3.x',
+                name: 'Spring Boot',
                 level: 'Advanced',
                 percentage: 85,
                 desc: 'PSA/IoC/AOP 원리 이해 기반의 아키텍처 설계 및 Spring Security 인증/인가 고도화',
